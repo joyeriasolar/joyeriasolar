@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Carga de Íconos FontAwesome para Redes Sociales y WhatsApp -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         :root {
@@ -29,7 +31,7 @@
         body {
             background-color: var(--tiffany-soft-bg);
             color: var(--luxury-dark);
-            padding-bottom: 60px;
+            padding-bottom: 0px;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -188,7 +190,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* BANNER HERO - OPCIÓN A (Recorte Inteligente) */
+        /* BANNER HERO */
         .hero-banner {
             width: 100%;
             height: 480px;
@@ -202,7 +204,6 @@
             position: relative;
         }
 
-        /* Adaptación fluida para Celulares y Tablets */
         @media (max-width: 768px) {
             .hero-banner {
                 height: 280px;
@@ -218,7 +219,7 @@
         main {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 1.5rem 4rem 1.5rem;
         }
 
         .section-title {
@@ -276,7 +277,6 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
-        /* Contenedor y Carrusel del Producto */
         .product-image-container {
             width: 100%;
             height: 220px;
@@ -489,7 +489,7 @@
             line-height: 1.5;
         }
 
-        /* Fondo Oscuro Overlay para Carrito */
+        /* Overlay para Carrito */
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -772,6 +772,129 @@
             font-style: italic;
             margin-bottom: 25px;
         }
+
+        /* --- BOTÓN FLOTANTE DE WHATSAPP CON ANIMACIÓN --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 58px;
+            height: 58px;
+            background-color: #25D366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.25);
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse-green 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #20ba5a;
+            color: #FFF;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* --- PIE DE PÁGINA (FOOTER) --- */
+        footer {
+            background-color: var(--luxury-dark);
+            color: #FFFFFF;
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
+            margin-top: 4rem;
+            border-top: 3px solid var(--tiffany-blue);
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            color: #FFFFFF;
+        }
+
+        .footer-col p {
+            font-size: 0.88rem;
+            color: #BBBBBB;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icon:hover {
+            background-color: var(--tiffany-blue);
+            color: #FFFFFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.88rem;
+            color: #BBBBBB;
+        }
+
+        .footer-contact-item i {
+            color: var(--tiffany-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.78rem;
+            color: #888888;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1.5px;
+        }
     </style>
 </head>
 <body>
@@ -809,7 +932,7 @@
         </div>
     </header>
 
-    <!-- Banner Principal Integrado -->
+    <!-- Banner Principal -->
     <section class="hero-banner" id="heroBanner"></section>
 
     <main id="catalogSection">
@@ -839,7 +962,7 @@
         </section>
     </main>
 
-    <!-- Fondo Oscuro Overlay -->
+    <!-- Fondo Oscuro Overlay para Carrito -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
     <!-- Panel Lateral del Carrito -->
@@ -876,6 +999,54 @@
         </div>
     </div>
 
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/56967109265?text=Hola%20Joyer%C3%ADa%20Solar,%20tengo%20una%20consulta%20sobre%20sus%20joyas" 
+       class="whatsapp-float" 
+       target="_blank" 
+       title="Consultar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- PIE DE PÁGINA (FOOTER) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Joyería Solar</h4>
+                <p>Especialistas en joyas exclusivas elaboradas en Plata de Ley 925. Diseños sofisticados pensados para momentos inolvidables.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://tiktok.com" target="_blank" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Atención al Cliente</h4>
+                <div class="footer-contact-item">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>+56 9 6710 9265</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>contacto@joyeriasolar.cl</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span>Envíos a todo Chile</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Garantía de Plata</h4>
+                <p>Todas nuestras piezas vienen grabadas con el sello de autenticidad 925 y cuentan con garantía de material.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 Joyería Solar — Todos los derechos reservados | Plata de Ley 925
+        </div>
+    </footer>
+
     <script>
         const WHATSAPP_PHONE = "56967109265"; 
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRgTZ1SapOZLi0mecLHB4PoxbjDkMlnX2tGgZNLOZpt2sKglnM1vCqyUdcZtIwmWVb/exec";
@@ -890,7 +1061,6 @@
                 const response = await fetch(APPS_SCRIPT_URL);
                 const rawData = await response.json();
 
-                // Formatear datos leídos desde Google Sheets
                 catalog = rawData.map(row => {
                     const id = row.ID || row.id || "";
                     const name = row.Nombre || row.name || row.nombre || "";
@@ -898,7 +1068,6 @@
                     const price = Number(row.Precio || row.price || row.precio || 0);
                     const rawImg = row.Imagen_URL || row.imagen || row.image || row.Image || "";
                     
-                    // PROCESAR MÚLTIPLES IMÁGENES MEDIANTE SEPARADOR "|"
                     let imagesArray = [];
                     if (rawImg && typeof rawImg === 'string') {
                         imagesArray = rawImg.split('|').map(url => url.trim()).filter(url => url.length > 0);
@@ -913,7 +1082,6 @@
                     };
                 }).filter(p => p.id && p.name);
 
-                // Ajustar filtro de precios dinámico según el catálogo
                 if (catalog.length > 0) {
                     const maxCatalogPrice = Math.max(...catalog.map(p => p.price), 30000);
                     const priceRangeInput = document.getElementById('priceRange');
@@ -1002,7 +1170,6 @@
             });
         }
 
-        // Cambiar imagen en el carrusel de la tarjeta (Optimizado sin re-renderizar todo)
         function changeCardImage(productId, direction) {
             const product = catalog.find(p => p.id === productId);
             if (!product || !product.images || product.images.length <= 1) return;
@@ -1057,7 +1224,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Agregar al carrito agrupando por cantidad
         function addToCart(id) {
             const product = catalog.find(p => p.id === id);
             if (!product) return;
@@ -1154,7 +1320,7 @@
                 }
             } else {
                 imgContainer.innerHTML = `<div class="placeholder-image">
-                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                     <div class="placeholder-text">Joyería Solar</div>
                    </div>`;
             }
@@ -1236,7 +1402,6 @@
             }
         });
 
-        // Inicializar al cargar
         document.addEventListener('DOMContentLoaded', () => {
             fetchCatalogFromSheets();
             updateCart();
