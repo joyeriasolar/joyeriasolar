@@ -294,26 +294,6 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
-        /* Estilos de Producto Agotado */
-        .product-card.out-of-stock {
-            opacity: 0.85;
-        }
-
-        .badge-out-of-stock {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background-color: #333333;
-            color: #FFFFFF;
-            font-family: 'Cinzel', serif;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            text-transform: uppercase;
-            z-index: 10;
-            border-radius: 2px;
-        }
-
         .product-image-container {
             width: 100%;
             height: 220px;
@@ -457,20 +437,13 @@
             transition: all 0.3s ease;
         }
 
-        .add-to-cart-btn.disabled {
-            background-color: #E0E0E0 !important;
-            color: #888888 !important;
-            border-color: #CCCCCC !important;
-            cursor: not-allowed;
-        }
-
-        .product-card:hover .add-to-cart-btn:not(.disabled) {
+        .product-card:hover .add-to-cart-btn {
             background-color: var(--tiffany-blue);
             color: #FFFFFF;
             border-color: var(--tiffany-blue);
         }
 
-        .add-to-cart-btn:hover:not(.disabled) {
+        .add-to-cart-btn:hover {
             background-color: var(--luxury-dark) !important;
             color: #FFFFFF !important;
             border-color: var(--luxury-dark) !important;
@@ -1110,7 +1083,7 @@
                     const price = Number(row.Precio || row.price || row.precio || 0);
                     const rawImg = row.Imagen_URL || row.imagen || row.image || row.Image || "";
                     
-                    // LECTURA DEL ESTADO O STOCK
+                    // DETECCIÓN DE STOCK / ESTADO
                     const statusVal = String(row.Estado || row.estado || row.Stock || row.stock || "").trim().toLowerCase();
                     const isOutOfStock = statusVal === "agotado" || statusVal === "sin stock" || statusVal === "0";
 
@@ -1130,7 +1103,8 @@
                 }).filter(p => p.id && p.name);
 
                 if (catalog.length > 0) {
-                    const maxCatalogPrice = Math.max(...catalog.map(p => p.price), 30000);
+                    const availableProducts = catalog.filter(p => !p.isOutOfStock);
+                    const maxCatalogPrice = availableProducts.length > 0 ? Math.max(...availableProducts.map(p => p.price), 30000) : 30000;
                     const priceRangeInput = document.getElementById('priceRange');
                     priceRangeInput.max = maxCatalogPrice;
                     priceRangeInput.value = maxCatalogPrice;
@@ -1157,7 +1131,7 @@
             grid.innerHTML = '';
 
             if (products.length === 0) {
-                grid.innerHTML = `<div class="loading-container">No se encontraron productos en esta selección.</div>`;
+                grid.innerHTML = `<div class="loading-container">No se encontraron productos disponibles en esta selección.</div>`;
                 return;
             }
 
@@ -1202,15 +1176,8 @@
                     `;
                 }
 
-                // Renderizado condicional según disponibilidad (Stock)
-                const outOfStockClass = p.isOutOfStock ? 'out-of-stock' : '';
-                const badgeHTML = p.isOutOfStock ? `<div class="badge-out-of-stock">Agotado</div>` : '';
-                const buttonDisabled = p.isOutOfStock ? 'disabled' : '';
-                const buttonText = p.isOutOfStock ? 'Agotado' : 'Agregar a la Bolsa';
-
                 grid.innerHTML += `
-                    <div class="product-card ${outOfStockClass}" onclick="openModal('${p.id}')">
-                        ${badgeHTML}
+                    <div class="product-card" onclick="openModal('${p.id}')">
                         <div>
                             ${imageContainerHTML}
                             <div class="product-id">${p.id}</div>
@@ -1218,7 +1185,7 @@
                             <div class="product-category">${p.category}</div>
                             <div class="product-price">$${p.price.toLocaleString('es-CL')}</div>
                         </div>
-                        <button class="add-to-cart-btn ${buttonDisabled}" ${p.isOutOfStock ? 'disabled' : ''} onclick="event.stopPropagation(); addToCart('${p.id}')">${buttonText}</button>
+                        <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')">Agregar a la Bolsa</button>
                     </div>
                 `;
             });
@@ -1257,6 +1224,9 @@
             document.getElementById('priceLabel').innerText = maxPrice.toLocaleString('es-CL');
 
             const filtered = catalog.filter(p => {
+                // FILTRO AUTOMÁTICO: Ocultar si el producto está en estado "Agotado"
+                if (p.isOutOfStock) return false;
+
                 const matchesSearch = p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query);
                 const matchesCategory = category === "" || p.category.toLowerCase() === category.toLowerCase();
                 const matchesPrice = p.price <= maxPrice;
@@ -1274,7 +1244,7 @@
             document.getElementById('priceRange').value = maxVal;
             document.getElementById('priceLabel').innerText = Number(maxVal).toLocaleString('es-CL');
             
-            renderProducts(catalog);
+            renderProducts(catalog.filter(p => !p.isOutOfStock));
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1352,7 +1322,7 @@
 
         function openModal(id) {
             const product = catalog.find(p => p.id === id);
-            if (!product) return;
+            if (!product || product.isOutOfStock) return;
 
             document.getElementById('modalId').innerText = product.id;
             document.getElementById('modalTitle').innerText = product.name;
@@ -1380,18 +1350,10 @@
             }
 
             const btn = document.getElementById('modalAddBtn');
-            if (product.isOutOfStock) {
-                btn.innerText = "Producto Agotado";
-                btn.classList.add("disabled");
-                btn.onclick = null;
-            } else {
-                btn.innerText = "Agregar a la Bolsa";
-                btn.classList.remove("disabled");
-                btn.onclick = function() {
-                    addToCart(product.id);
-                    closeModal();
-                };
-            }
+            btn.onclick = function() {
+                addToCart(product.id);
+                closeModal();
+            };
 
             document.getElementById('productModal').classList.add('active');
         }
