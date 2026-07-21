@@ -52,17 +52,63 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Banner superior */
-        .top-bar {
+        /* BANNER DINÁMICO PROMOCIONAL (TOP BAR) */
+        .top-bar-carousel {
             background-color: var(--luxury-dark);
             color: #FFFFFF;
-            text-align: center;
-            padding: 8px 15px;
+            padding: 8px 30px;
             font-size: 0.75rem;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Cinzel', 'Times New Roman', serif;
+            position: relative;
+            overflow: hidden;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .top-bar-slide {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: translateY(10px);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .top-bar-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .top-bar-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px 10px;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+
+        .top-bar-nav:hover {
+            color: var(--tiffany-blue);
+        }
+
+        .top-bar-nav.prev { left: 5px; }
+        .top-bar-nav.next { right: 5px; }
 
         header {
             background-color: #FFFFFF;
@@ -424,7 +470,7 @@
             font-style: italic;
         }
 
-        /* --- DESPLEGABLE DE TALLAS / LARGOS EN TARJETA --- */
+        /* SELECTOR DE TALLAS / LARGOS */
         .variant-selector-box {
             margin-bottom: 12px;
             text-align: left;
@@ -987,7 +1033,25 @@
 </head>
 <body>
 
-    <div class="top-bar">Colección Exclusiva Plata 925 — Joyería Solar</div>
+    <!-- BARRA DINÁMICA DE ANUNCIOS PROMOCIONALES -->
+    <div class="top-bar-carousel" id="topBarCarousel">
+        <button class="top-bar-nav prev" onclick="moveTopBarSlide(-1)">&#10094;</button>
+        
+        <div class="top-bar-slide active">
+            <i class="fa-solid fa-truck-fast" style="color: var(--tiffany-blue);"></i>
+            <span>Envío GRATIS por compras sobre $50.000 a todo Chile</span>
+        </div>
+        <div class="top-bar-slide">
+            <i class="fa-solid fa-gem" style="color: var(--tiffany-blue);"></i>
+            <span>Colección Exclusiva — Auténtica Plata de Ley 925 Certificada</span>
+        </div>
+        <div class="top-bar-slide">
+            <i class="fa-brands fa-whatsapp" style="color: var(--tiffany-blue);"></i>
+            <span>Atención personalizada y asesoría directa por WhatsApp</span>
+        </div>
+
+        <button class="top-bar-nav next" onclick="moveTopBarSlide(1)">&#10095;</button>
+    </div>
 
     <header>
         <div class="header-container">
@@ -1166,6 +1230,35 @@
         let catalog = [];
         let cart = JSON.parse(localStorage.getItem('solar_cart')) || [];
         let activeImageIndices = {};
+        
+        // LÓGICA DE ROTACIÓN DEL BANNER PROMOCIONAL
+        let topBarSlideIndex = 0;
+        let topBarInterval;
+
+        function showTopBarSlide(index) {
+            const slides = document.querySelectorAll('.top-bar-slide');
+            if (slides.length === 0) return;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            if (index >= slides.length) topBarSlideIndex = 0;
+            else if (index < 0) topBarSlideIndex = slides.length - 1;
+            else topBarSlideIndex = index;
+
+            slides[topBarSlideIndex].classList.add('active');
+        }
+
+        function moveTopBarSlide(direction) {
+            clearInterval(topBarInterval);
+            showTopBarSlide(topBarSlideIndex + direction);
+            startTopBarRotation();
+        }
+
+        function startTopBarRotation() {
+            topBarInterval = setInterval(() => {
+                showTopBarSlide(topBarSlideIndex + 1);
+            }, 4000); // Cambia cada 4 segundos
+        }
 
         // Cargar productos desde Google Sheets
         async function fetchCatalogFromSheets() {
@@ -1183,12 +1276,13 @@
                     const statusVal = String(row.Estado || row.estado || row.Stock || row.stock || "").trim().toLowerCase();
                     const isOutOfStock = statusVal === "agotado" || statusVal === "sin stock" || statusVal === "0";
 
-                    // DETECCIÓN DE VARIANTES (Talla / Largo)
-                    const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || "").trim();
-                    const rawVariants = String(row.Variantes || row.variantes || "").trim();
+                    const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || row.tipo || "").trim();
+                    const rawVariants = String(row.Variantes || row.variantes || row.Medidas || row.medidas || "").trim();
+                    
                     let variantsList = [];
                     if (rawVariants) {
-                        variantsList = rawVariants.split('|').map(v => v.trim()).filter(v => v.length > 0);
+                        const separator = rawVariants.includes('|') ? '|' : ',';
+                        variantsList = rawVariants.split(separator).map(v => v.trim()).filter(v => v.length > 0);
                     }
 
                     let imagesArray = [];
@@ -1282,7 +1376,6 @@
                     `;
                 }
 
-                // CONSTRUCCIÓN DEL SELECCIONADOR DE VARIANTE
                 let variantHTML = '';
                 if (p.variantsList && p.variantsList.length > 0) {
                     const labelText = p.variantType || 'Seleccionar Medida';
@@ -1381,7 +1474,6 @@
                 }
             }
 
-            // Clave única considerando la variante seleccionada
             const cartItemKey = selectedVariant ? `${id}-${selectedVariant}` : id;
 
             const existingIndex = cart.findIndex(item => item.cartKey === cartItemKey);
@@ -1446,7 +1538,6 @@
                 `;
             });
 
-            // LÓGICA DE ENVÍO
             const shippingSelect = document.getElementById('shippingSelect');
             const shippingType = shippingSelect ? shippingSelect.value : 'rm';
             let shippingCost = 0;
@@ -1646,6 +1737,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchCatalogFromSheets();
             updateCart();
+            startTopBarRotation(); // Inicia la rotación de anuncios superiores
         });
     </script>
 </body>
