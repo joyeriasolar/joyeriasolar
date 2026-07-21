@@ -559,9 +559,125 @@
             border-color: var(--luxury-dark) !important;
         }
 
+        /* --- SECCIÓN DE RESEÑAS Y TESTIMONIOS --- */
+        .reviews-section-container {
+            margin-top: 5rem;
+            padding: 3.5rem 2rem;
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+        }
+
+        .reviews-header-summary {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .reviews-rating-stars {
+            color: var(--luxury-gold);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .reviews-score-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: var(--luxury-dark);
+            font-weight: 600;
+        }
+
+        .reviews-sub-label {
+            font-size: 0.82rem;
+            color: var(--tiffany-blue);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .review-card {
+            background-color: var(--tiffany-soft-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--tiffany-blue);
+        }
+
+        .review-quote-icon {
+            color: var(--tiffany-blue);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .review-text {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 18px;
+        }
+
+        .review-footer {
+            border-top: 1px dashed var(--border-color);
+            padding-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .review-author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .review-author-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--luxury-dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .review-author-name i {
+            color: #27ae60;
+            font-size: 0.75rem;
+        }
+
+        .review-item-bought {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        .review-card-stars {
+            color: var(--luxury-gold);
+            font-size: 0.75rem;
+            display: flex;
+            gap: 2px;
+        }
+
         /* --- SECCIÓN DE CUIDADOS Y FAQ --- */
         .faq-care-section {
-            margin-top: 5rem;
+            margin-top: 4rem;
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
@@ -1375,6 +1491,73 @@
             <div class="loading-container">Cargando colección exclusiva desde Google Sheets...</div>
         </div>
 
+        <!-- SECCIÓN DE RESEÑAS Y TESTIMONIOS -->
+        <section class="reviews-section-container">
+            <h2 class="section-title">Opiniones de Nuestras Clientas</h2>
+            
+            <div class="reviews-header-summary">
+                <div class="reviews-rating-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="reviews-score-text">4.9 / 5.0 — Excelente Valoración</div>
+                <div class="reviews-sub-label"><i class="fa-solid fa-shield-halved"></i> Compras Verificadas &amp; Envíos Garantizados</div>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div>
+                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                        <p class="review-text">"El collar de plata llegó súper rápido a Providencia y la presentación en su caja es hermosa. Se nota la calidad real de la Plata 925 desde que lo abres."</p>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-author-info">
+                            <span class="review-author-name">Camila R. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
+                            <span class="review-item-bought">Santiago RM • Collar de Plata 925</span>
+                        </div>
+                        <div class="review-card-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                        <p class="review-text">"Tenía dudas con la talla de mi anillo y por WhatsApp me orientaron con la guía de medidas. Me quedó impecable, 100% recomendados."</p>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-author-info">
+                            <span class="review-author-name">Valentina M. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
+                            <span class="review-item-bought">Viña del Mar • Anillo Plata 925</span>
+                        </div>
+                        <div class="review-card-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div>
+                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                        <p class="review-text">"Compré una pulsera para regalar de cumpleaños. Llegó a Concepción en 2 días por Starken en perfecto estado. Muy profesional la atención."</p>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-author-info">
+                            <span class="review-author-name">Fernanda S. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
+                            <span class="review-item-bought">Concepción • Pulsera de Plata 925</span>
+                        </div>
+                        <div class="review-card-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- SECCIÓN DE CUIDADOS Y PREGUNTAS FRECUENTES -->
         <section class="faq-care-section">
             <!-- Cuidados de la Plata 925 -->
@@ -2157,7 +2340,6 @@
             const faqItem = buttonEl.closest('.faq-item');
             const isActive = faqItem.classList.contains('active');
 
-            // Cierra las demás preguntas para mantenerlo limpio
             document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
 
             if (!isActive) {
