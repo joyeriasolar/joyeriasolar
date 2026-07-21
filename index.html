@@ -509,7 +509,6 @@
             display: block;
         }
 
-        /* BOTÓN / ENLACE DE GUÍA DE TALLAS */
         .size-guide-link {
             font-size: 0.68rem;
             color: var(--tiffany-blue);
@@ -999,7 +998,7 @@
             margin-bottom: 15px;
         }
 
-        /* --- ESTILOS MODAL GUÍA DE TALLAS --- */
+        /* ESTILOS MODAL GUÍA DE TALLAS */
         .size-guide-modal-content {
             max-width: 600px;
             width: 90%;
@@ -1236,7 +1235,7 @@
                 </div>
             </div>
             <div class="controls">
-                <input type="text" id="searchInput" placeholder="Buscar joya o código..." oninput="filterProducts()">
+                <input type="text" id="searchInput" placeholder="Buscar joya, categoría o palabra clave..." oninput="filterProducts()">
                 <select id="categorySelect" onchange="filterProducts()">
                     <option value="">Todas las colecciones</option>
                     <option value="Anillos">Anillos</option>
@@ -1534,6 +1533,9 @@
 
                     const badgeText = String(row.Etiqueta || row.etiqueta || row.Badge || row.badge || "").trim();
 
+                    // LECTURA DE KEYWORDS
+                    const keywords = String(row.Keywords || row.keywords || row.Palabras_Clave || row.palabras_clave || "").trim();
+
                     const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || row.tipo || "").trim();
                     const rawVariants = String(row.Variantes || row.variantes || row.Medidas || row.medidas || "").trim();
                     
@@ -1556,6 +1558,7 @@
                         images: imagesArray,
                         isOutOfStock: isOutOfStock,
                         badgeText: badgeText,
+                        keywords: keywords,
                         variantType: variantType,
                         variantsList: variantsList
                     };
@@ -1628,7 +1631,7 @@
                     imageContainerHTML = `
                         <div class="product-image-container">
                             <div class="placeholder-image">
-                                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                                 <div class="placeholder-text">Joyería Solar</div>
                             </div>
                         </div>
@@ -1697,19 +1700,55 @@
             }
         }
 
+        // BÚSQUEDA INTELIGENTE POR PALABRAS CLAVE Y SINÓNIMOS
         function filterProducts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
+            let query = document.getElementById('searchInput').value.toLowerCase().trim();
             const category = document.getElementById('categorySelect').value;
             const maxPrice = parseInt(document.getElementById('priceRange').value);
 
             document.getElementById('priceLabel').innerText = maxPrice.toLocaleString('es-CL');
 
+            // Mapeo automático de sinónimos comunes
+            const synonymMap = {
+                'cadena': 'collar',
+                'cadenas': 'collar',
+                'colgante': 'collar',
+                'colgantes': 'collar',
+                'dije': 'collar',
+                'dijes': 'collar',
+                'esclava': 'pulsera',
+                'esclavas': 'pulsera',
+                'argolla': 'aro',
+                'argollas': 'aro',
+                'aros': 'aro',
+                'anillos': 'anillo'
+            };
+
+            // Si la búsqueda coincide con un sinónimo, expandimos la búsqueda a ese término
+            let searchTerms = [query];
+            if (synonymMap[query]) {
+                searchTerms.push(synonymMap[query]);
+            }
+
             const filtered = catalog.filter(p => {
                 if (p.isOutOfStock) return false;
 
-                const matchesSearch = p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query);
-                const matchesCategory = category === "" || p.category.toLowerCase() === category.toLowerCase();
+                const nameText = p.name.toLowerCase();
+                const idText = p.id.toLowerCase();
+                const catText = p.category.toLowerCase();
+                const kwText = p.keywords ? p.keywords.toLowerCase() : '';
+
+                // Verifica si alguno de los términos de búsqueda coincide con nombre, id, categoría o keywords
+                const matchesSearch = query === "" || searchTerms.some(term => 
+                    nameText.includes(term) || 
+                    idText.includes(term) || 
+                    catText.includes(term) || 
+                    kwText.includes(term)
+                );
+
+                const matchesCategory = category === "" || catText === category.toLowerCase();
                 const matchesPrice = p.price <= maxPrice;
+
                 return matchesSearch && matchesCategory && matchesPrice;
             });
 
