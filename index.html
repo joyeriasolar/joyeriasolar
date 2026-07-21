@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joyería Solar - Plata 925</title>
     
-    <!-- Meta Etiquetas de Redes Sociales / Open Graph (Vista Previa WhatsApp e Instagram) -->
+    <!-- Meta Etiquetas de Redes Sociales / Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Joyería Solar — Alta Joyería & Plata 925">
     <meta property="og:description" content="Descubre nuestra colección exclusiva de joyas elaboradas en auténtica Plata de Ley 925 certificada. Envíos a todo Chile y atención personalizada.">
@@ -294,6 +294,26 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
+        /* Estilos de Producto Agotado */
+        .product-card.out-of-stock {
+            opacity: 0.85;
+        }
+
+        .badge-out-of-stock {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #333333;
+            color: #FFFFFF;
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            z-index: 10;
+            border-radius: 2px;
+        }
+
         .product-image-container {
             width: 100%;
             height: 220px;
@@ -437,13 +457,20 @@
             transition: all 0.3s ease;
         }
 
-        .product-card:hover .add-to-cart-btn {
+        .add-to-cart-btn.disabled {
+            background-color: #E0E0E0 !important;
+            color: #888888 !important;
+            border-color: #CCCCCC !important;
+            cursor: not-allowed;
+        }
+
+        .product-card:hover .add-to-cart-btn:not(.disabled) {
             background-color: var(--tiffany-blue);
             color: #FFFFFF;
             border-color: var(--tiffany-blue);
         }
 
-        .add-to-cart-btn:hover {
+        .add-to-cart-btn:hover:not(.disabled) {
             background-color: var(--luxury-dark) !important;
             color: #FFFFFF !important;
             border-color: var(--luxury-dark) !important;
@@ -1083,6 +1110,10 @@
                     const price = Number(row.Precio || row.price || row.precio || 0);
                     const rawImg = row.Imagen_URL || row.imagen || row.image || row.Image || "";
                     
+                    // LECTURA DEL ESTADO O STOCK
+                    const statusVal = String(row.Estado || row.estado || row.Stock || row.stock || "").trim().toLowerCase();
+                    const isOutOfStock = statusVal === "agotado" || statusVal === "sin stock" || statusVal === "0";
+
                     let imagesArray = [];
                     if (rawImg && typeof rawImg === 'string') {
                         imagesArray = rawImg.split('|').map(url => url.trim()).filter(url => url.length > 0);
@@ -1093,7 +1124,8 @@
                         name: String(name),
                         category: String(category),
                         price: price,
-                        images: imagesArray
+                        images: imagesArray,
+                        isOutOfStock: isOutOfStock
                     };
                 }).filter(p => p.id && p.name);
 
@@ -1170,8 +1202,15 @@
                     `;
                 }
 
+                // Renderizado condicional según disponibilidad (Stock)
+                const outOfStockClass = p.isOutOfStock ? 'out-of-stock' : '';
+                const badgeHTML = p.isOutOfStock ? `<div class="badge-out-of-stock">Agotado</div>` : '';
+                const buttonDisabled = p.isOutOfStock ? 'disabled' : '';
+                const buttonText = p.isOutOfStock ? 'Agotado' : 'Agregar a la Bolsa';
+
                 grid.innerHTML += `
-                    <div class="product-card" onclick="openModal('${p.id}')">
+                    <div class="product-card ${outOfStockClass}" onclick="openModal('${p.id}')">
+                        ${badgeHTML}
                         <div>
                             ${imageContainerHTML}
                             <div class="product-id">${p.id}</div>
@@ -1179,7 +1218,7 @@
                             <div class="product-category">${p.category}</div>
                             <div class="product-price">$${p.price.toLocaleString('es-CL')}</div>
                         </div>
-                        <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')">Agregar a la Bolsa</button>
+                        <button class="add-to-cart-btn ${buttonDisabled}" ${p.isOutOfStock ? 'disabled' : ''} onclick="event.stopPropagation(); addToCart('${p.id}')">${buttonText}</button>
                     </div>
                 `;
             });
@@ -1241,7 +1280,7 @@
 
         function addToCart(id) {
             const product = catalog.find(p => p.id === id);
-            if (!product) return;
+            if (!product || product.isOutOfStock) return;
 
             const existingIndex = cart.findIndex(item => item.id === id);
             if (existingIndex > -1) {
@@ -1341,10 +1380,18 @@
             }
 
             const btn = document.getElementById('modalAddBtn');
-            btn.onclick = function() {
-                addToCart(product.id);
-                closeModal();
-            };
+            if (product.isOutOfStock) {
+                btn.innerText = "Producto Agotado";
+                btn.classList.add("disabled");
+                btn.onclick = null;
+            } else {
+                btn.innerText = "Agregar a la Bolsa";
+                btn.classList.remove("disabled");
+                btn.onclick = function() {
+                    addToCart(product.id);
+                    closeModal();
+                };
+            }
 
             document.getElementById('productModal').classList.add('active');
         }
