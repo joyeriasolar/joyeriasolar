@@ -559,9 +559,119 @@
             border-color: var(--luxury-dark) !important;
         }
 
+        /* --- SECCIÓN DE CUIDADOS Y FAQ --- */
+        .faq-care-section {
+            margin-top: 5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 850px) {
+            .faq-care-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .care-box, .faq-box {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+        }
+
+        .faq-care-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--luxury-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--tiffany-blue);
+            padding-bottom: 10px;
+        }
+
+        .care-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .care-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .care-item i {
+            color: var(--tiffany-blue);
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            background-color: var(--tiffany-soft-bg);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 14px 18px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--luxury-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            color: var(--tiffany-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 18px;
+            font-size: 0.88rem;
+            color: #666;
+            line-height: 1.6;
+            background-color: #FFFFFF;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 12px 18px 18px 18px;
+            border-top: 1px solid var(--border-color);
+        }
+
         /* Sección Sobre Nosotros */
         .about-section {
-            margin-top: 5rem;
+            margin-top: 3rem;
             padding: 3rem 2rem;
             background-color: #FFFFFF;
             border: 1px solid var(--border-color);
@@ -1265,6 +1375,74 @@
             <div class="loading-container">Cargando colección exclusiva desde Google Sheets...</div>
         </div>
 
+        <!-- SECCIÓN DE CUIDADOS Y PREGUNTAS FRECUENTES -->
+        <section class="faq-care-section">
+            <!-- Cuidados de la Plata 925 -->
+            <div class="care-box">
+                <div class="faq-care-title"><i class="fa-solid fa-sparkles"></i> Cuidados de la Plata 925</div>
+                <ul class="care-list">
+                    <li class="care-item">
+                        <i class="fa-solid fa-droplet-slash"></i>
+                        <span><strong>Evita productos químicos:</strong> Quítate las joyas antes de ducharte, usar perfumes, cremas o ingresar a piscinas/mar.</span>
+                    </li>
+                    <li class="care-item">
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span><strong>Guardado adecuado:</strong> Almacena cada pieza individualmente en un lugar seco y cerrado para evitar el roce y la oxidación por aire.</span>
+                    </li>
+                    <li class="care-item">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span><strong>Limpieza suave:</strong> Frota delicadamente con un paño especial para joyas o microfibra para mantener su brillo intacto.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Preguntas Frecuentes (Acordeón) -->
+            <div class="faq-box">
+                <div class="faq-care-title"><i class="fa-solid fa-circle-question"></i> Preguntas Frecuentes</div>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            ¿Las joyas son de Plata 925 auténtica?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            ¡Sí! Todas nuestras joyas están elaboradas en auténtica Plata de Ley 925 certificada, garantizando la máxima pureza, resistencia y brillo.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            ¿Cuáles son los tiempos de despacho?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            En la Región Metropolitana despachamos entre 24 y 48 horas hábiles. Para regiones enviamos mediante Starken o Chilexpress con número de seguimiento.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            ¿Qué pasa si me equivoco de talla?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            ¡No te preocupes! Ofrecemos cambios de talla coordinando directamente a través de nuestro WhatsApp oficial de atención al cliente.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            ¿Cómo aplica la promoción de Envío Gratis?
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            Al sumar $50.000 o más en tu bolsa de compras, el costo de despacho se descuenta automáticamente a $0 al momento de enviar tu pedido por WhatsApp.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="about-section">
             <h3>Sobre Joyería Solar</h3>
             <p>En Joyería Solar seleccionamos meticulosamente cada pieza trabajada en auténtica Plata de Ley 925. Nuestra pasión radica en ofrecer distinción, elegancia y durabilidad superior a través de joyas delicadas y modernas pensadas para realzar tu estilo personal.</p>
@@ -1533,7 +1711,6 @@
 
                     const badgeText = String(row.Etiqueta || row.etiqueta || row.Badge || row.badge || "").trim();
 
-                    // LECTURA DE KEYWORDS
                     const keywords = String(row.Keywords || row.keywords || row.Palabras_Clave || row.palabras_clave || "").trim();
 
                     const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || row.tipo || "").trim();
@@ -1631,7 +1808,7 @@
                     imageContainerHTML = `
                         <div class="product-image-container">
                             <div class="placeholder-image">
-                                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                                 <div class="placeholder-text">Joyería Solar</div>
                             </div>
                         </div>
@@ -1700,7 +1877,6 @@
             }
         }
 
-        // BÚSQUEDA INTELIGENTE POR PALABRAS CLAVE Y SINÓNIMOS
         function filterProducts() {
             let query = document.getElementById('searchInput').value.toLowerCase().trim();
             const category = document.getElementById('categorySelect').value;
@@ -1708,7 +1884,6 @@
 
             document.getElementById('priceLabel').innerText = maxPrice.toLocaleString('es-CL');
 
-            // Mapeo automático de sinónimos comunes
             const synonymMap = {
                 'cadena': 'collar',
                 'cadenas': 'collar',
@@ -1724,7 +1899,6 @@
                 'anillos': 'anillo'
             };
 
-            // Si la búsqueda coincide con un sinónimo, expandimos la búsqueda a ese término
             let searchTerms = [query];
             if (synonymMap[query]) {
                 searchTerms.push(synonymMap[query]);
@@ -1738,7 +1912,6 @@
                 const catText = p.category.toLowerCase();
                 const kwText = p.keywords ? p.keywords.toLowerCase() : '';
 
-                // Verifica si alguno de los términos de búsqueda coincide con nombre, id, categoría o keywords
                 const matchesSearch = query === "" || searchTerms.some(term => 
                     nameText.includes(term) || 
                     idText.includes(term) || 
@@ -1977,6 +2150,19 @@
 
             const contentEl = document.getElementById(`guide-tab-${tabName}`);
             if (contentEl) contentEl.classList.add('active');
+        }
+
+        /* LÓGICA PREGUNTAS FRECUENTES (FAQ) */
+        function toggleFaq(buttonEl) {
+            const faqItem = buttonEl.closest('.faq-item');
+            const isActive = faqItem.classList.contains('active');
+
+            // Cierra las demás preguntas para mantenerlo limpio
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
         }
 
         function closeModal(modalId) {
