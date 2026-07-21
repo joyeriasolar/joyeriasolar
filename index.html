@@ -340,7 +340,6 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
-        /* ETIQUETAS / BADGES SOBRE LAS TARJETAS */
         .product-badge {
             position: absolute;
             top: 12px;
@@ -617,9 +616,9 @@
         #cartPanel {
             position: fixed;
             top: 0;
-            right: -400px;
+            right: -420px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             height: 100%;
             background-color: #FFFFFF;
             box-shadow: -10px 0 30px rgba(0,0,0,0.1);
@@ -627,7 +626,7 @@
             transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
-            padding: 30px;
+            padding: 25px;
         }
 
         #cartPanel.open {
@@ -639,8 +638,8 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .cart-header h3 {
@@ -663,14 +662,15 @@
             flex-grow: 1;
             overflow-y: auto;
             padding-right: 5px;
+            margin-bottom: 10px;
         }
 
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--tiffany-soft-bg);
         }
 
@@ -712,62 +712,110 @@
             color: #FFF;
         }
 
-        /* CALCULADORA DE ENVÍO EN EL CARRITO */
-        .shipping-box {
+        /* --- FORMULARIO DATOS DEL CLIENTE EN CARRITO --- */
+        .customer-form-box {
             background-color: var(--tiffany-soft-bg);
             border: 1px solid var(--border-color);
-            padding: 12px;
-            margin-top: 15px;
-            margin-bottom: 15px;
+            padding: 12px 14px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        .shipping-box label {
+        .customer-form-title {
             font-family: 'Cinzel', serif;
             font-size: 0.75rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            color: var(--luxury-dark);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .customer-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-row-2 {
+            display: flex;
+            gap: 8px;
+        }
+
+        .form-row-2 input {
+            width: 50%;
+        }
+
+        .customer-form-box input, .customer-form-box select {
+            width: 100%;
+            padding: 7px 10px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+            background-color: #FFFFFF;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .customer-form-box input:focus, .customer-form-box select:focus {
+            border-color: var(--tiffany-blue);
+        }
+
+        /* CALCULADORA DE ENVÍO EN EL CARRITO */
+        .shipping-box {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+
+        .shipping-box label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: var(--luxury-dark);
         }
 
         .shipping-box select {
             width: 100%;
-            padding: 8px;
-            font-size: 0.82rem;
+            padding: 6px 8px;
+            font-size: 0.8rem;
             border: 1px solid var(--border-color);
             background-color: #FFFFFF;
         }
 
         .free-shipping-note {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--tiffany-blue);
             font-style: italic;
-            margin-top: 6px;
+            margin-top: 4px;
             text-align: center;
             font-weight: 600;
         }
 
         .cart-footer {
             border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-            margin-top: 5px;
+            padding-top: 12px;
         }
 
         .cart-row-detail {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #666;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .cart-total-row {
             display: flex;
             justify-content: space-between;
-            font-size: 1.25rem;
-            margin-top: 10px;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            margin-top: 8px;
+            margin-bottom: 15px;
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-weight: 600;
             color: var(--luxury-dark);
@@ -778,7 +826,7 @@
             background-color: var(--tiffany-blue);
             color: #FFFFFF;
             border: none;
-            padding: 15px;
+            padding: 14px;
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 0.8rem;
             letter-spacing: 2px;
@@ -1143,6 +1191,22 @@
         </div>
         <div id="cartItems" class="cart-items"></div>
 
+        <!-- FORMULARIO DATOS DEL CLIENTE -->
+        <div class="customer-form-box">
+            <div class="customer-form-title"><i class="fa-regular fa-user"></i> Datos del Comprador</div>
+            <div class="customer-form-group">
+                <div class="form-row-2">
+                    <input type="text" id="custName" placeholder="Nombre y Apellido *">
+                    <input type="text" id="custRut" placeholder="RUT *">
+                </div>
+                <input type="text" id="custAddress" placeholder="Dirección y Comuna de Despacho *">
+                <select id="custPayment">
+                    <option value="Transferencia Bancaria">Pago: Transferencia Bancaria</option>
+                    <option value="Tarjeta de Débito/Crédito">Pago: Tarjeta Débito / Crédito</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Calculadora de Envíos en Carrito -->
         <div class="shipping-box">
             <label for="shippingSelect"><i class="fa-solid fa-truck"></i> Método de Envío:</label>
@@ -1249,7 +1313,7 @@
         let cart = JSON.parse(localStorage.getItem('solar_cart')) || [];
         let activeImageIndices = {};
         
-        // LÓGICA DE ROTACIÓN DEL BANNER PROMOCIONAL
+        // ROTACIÓN DE BANNER PROMOCIONAL
         let topBarSlideIndex = 0;
         let topBarInterval;
 
@@ -1294,7 +1358,6 @@
                     const statusVal = String(row.Estado || row.estado || row.Stock || row.stock || "").trim().toLowerCase();
                     const isOutOfStock = statusVal === "agotado" || statusVal === "sin stock" || statusVal === "0";
 
-                    // LECTURA DE ETIQUETA / BADGE
                     const badgeText = String(row.Etiqueta || row.etiqueta || row.Badge || row.badge || "").trim();
 
                     const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || row.tipo || "").trim();
@@ -1398,7 +1461,6 @@
                     `;
                 }
 
-                // ETIQUETA DE PRODUCTO
                 const badgeHTML = p.badgeText ? `<div class="product-badge">${p.badgeText}</div>` : '';
 
                 let variantHTML = '';
@@ -1644,7 +1706,7 @@
                 }
             } else {
                 imgContainer.innerHTML = `<div class="placeholder-image">
-                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                     <div class="placeholder-text">Joyería Solar</div>
                    </div>`;
             }
@@ -1682,16 +1744,34 @@
             }
         }
 
+        // ENVÍO DE ORDEN COMPLETA A WHATSAPP
         function sendWhatsAppOrder() {
             if(cart.length === 0) {
                 alert("La bolsa de compras está vacía.");
                 return;
             }
+
+            // Captura de datos del cliente
+            const name = document.getElementById('custName').value.trim();
+            const rut = document.getElementById('custRut').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const payment = document.getElementById('custPayment').value;
+
+            if(!name || !rut || !address) {
+                alert("Por favor completa los campos obligatorios del comprador (Nombre, RUT y Dirección) antes de solicitar por WhatsApp.");
+                return;
+            }
             
             let subtotal = 0;
-            let text = "Hola Joyería Solar, me gustaría solicitar el siguiente pedido:\n\n";
-            text += "*--- DETALLE DE JOYAS ---*\n";
+            let text = "✨ *ORDEN DE COMPRA — JOYERÍA SOLAR* ✨\n\n";
             
+            text += "*--- DATOS DEL CLIENTE ---*\n";
+            text += `• *Nombre:* ${name}\n`;
+            text += `• *RUT:* ${rut}\n`;
+            text += `• *Dirección/Comuna:* ${address}\n`;
+            text += `• *Medio de Pago:* ${payment}\n\n`;
+
+            text += "*--- DETALLE DE PRODUCTOS ---*\n";
             cart.forEach(item => {
                 const qty = item.quantity || 1;
                 const itemSub = item.price * qty;
@@ -1721,11 +1801,11 @@
 
             const grandTotal = subtotal + shippingCost;
 
-            text += `\n*--- RESUMEN ---*\n`;
-            text += `• *Subtotal:* $${subtotal.toLocaleString('es-CL')}\n`;
-            text += `• *Método de Envío:* ${shippingText}\n`;
+            text += `\n*--- RESUMEN FINAL ---*\n`;
+            text += `• *Subtotal Joyas:* $${subtotal.toLocaleString('es-CL')}\n`;
+            text += `• *Envío:* ${shippingText}\n`;
             text += `• *TOTAL A PAGAR:* $${grandTotal.toLocaleString('es-CL')}\n\n`;
-            text += "Quedo a la espera de sus datos para realizar la transferencia / pago. ¡Muchas gracias!";
+            text += "Quedo a la espera de confirmación y datos para coordinar el pago. ¡Muchas gracias!";
             
             const encodedText = encodeURIComponent(text);
             window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodedText}`, '_blank');
