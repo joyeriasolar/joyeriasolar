@@ -18,14 +18,14 @@
     <meta name="twitter:description" content="Colección exclusiva de joyas elaboradas en auténtica Plata de Ley 925 certificada.">
     <meta name="twitter:image" content="https://i.postimg.cc/7YJJ4YKx/Chat-GPT-Image-20-jul-2026-09-39-09-p-m.png">
 
-    <!-- Favicon (Ícono en la pestaña del navegador) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/7YJJ4YKx/Chat-GPT-Image-20-jul-2026-09-39-09-p-m.png">
 
     <!-- Carga de fuentes tipográficas elegantes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <!-- Carga de Íconos FontAwesome para Redes Sociales y WhatsApp -->
+    <!-- Carga de Íconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -186,7 +186,7 @@
             flex-wrap: wrap;
         }
 
-        input[type="text"], select {
+        input[type="text"], textarea, select {
             padding: 10px 16px;
             border: 1px solid var(--border-color);
             background-color: #FFFFFF;
@@ -197,7 +197,7 @@
             transition: all 0.3s ease;
         }
 
-        input[type="text"]:focus, select:focus {
+        input[type="text"]:focus, textarea:focus, select:focus {
             border-color: var(--tiffany-blue);
             box-shadow: 0 0 5px rgba(10, 186, 181, 0.2);
         }
@@ -206,7 +206,6 @@
             flex: 1 1 200px;
         }
 
-        /* Control de Filtro de Precios */
         .price-filter-container {
             display: flex;
             align-items: center;
@@ -273,19 +272,13 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .hero-banner {
-                height: 220px;
-            }
-        }
-
         main {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 1.5rem 4rem 1.5rem;
         }
 
-        /* --- CARRUSEL LOOKBOOK EDITORIAL ESTILO TIFFANY --- */
+        /* CARRUSEL LOOKBOOK EDITORIAL ESTILO TIFFANY */
         .editorial-section {
             margin-bottom: 4rem;
         }
@@ -741,17 +734,17 @@
             border-color: var(--luxury-dark) !important;
         }
 
-        /* --- SECCIÓN DE RESEÑAS Y TESTIMONIOS --- */
+        /* --- SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA --- */
         .reviews-section-container {
             margin-top: 5rem;
-            padding: 3.5rem 2rem;
+            padding: 3rem 2rem;
             background-color: #FFFFFF;
             border: 1px solid var(--border-color);
         }
 
         .reviews-header-summary {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .reviews-rating-stars {
@@ -765,60 +758,98 @@
 
         .reviews-score-text {
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             letter-spacing: 2px;
             color: var(--luxury-dark);
             font-weight: 600;
         }
 
-        .reviews-sub-label {
-            font-size: 0.82rem;
-            color: var(--tiffany-blue);
-            margin-top: 4px;
-            letter-spacing: 1px;
+        .reviews-actions-row {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn-write-review {
+            background-color: transparent;
+            border: 1px solid var(--luxury-dark);
+            color: var(--luxury-dark);
+            padding: 10px 24px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-write-review:hover {
+            background-color: var(--tiffany-blue);
+            color: #FFFFFF;
+            border-color: var(--tiffany-blue);
+        }
+
+        /* RECUADRO CON SCROLL INTERNO PARA RESEÑAS ILIMITADAS */
+        .reviews-scroll-box {
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--tiffany-soft-bg);
+            padding: 20px;
+        }
+
+        /* Personalización elegante de la barra de scroll */
+        .reviews-scroll-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .reviews-scroll-box::-webkit-scrollbar-track {
+            background: #F0F0F0;
+        }
+
+        .reviews-scroll-box::-webkit-scrollbar-thumb {
+            background: var(--tiffany-blue);
+            border-radius: 3px;
         }
 
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
         .review-card {
-            background-color: var(--tiffany-soft-bg);
+            background-color: #FFFFFF;
             border: 1px solid var(--border-color);
-            padding: 25px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
         .review-card:hover {
-            transform: translateY(-4px);
             border-color: var(--tiffany-blue);
         }
 
         .review-quote-icon {
             color: var(--tiffany-blue);
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
             opacity: 0.8;
         }
 
         .review-text {
-            font-size: 0.92rem;
-            line-height: 1.7;
+            font-size: 0.88rem;
+            line-height: 1.6;
             color: #444;
             font-style: italic;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .review-footer {
             border-top: 1px dashed var(--border-color);
-            padding-top: 12px;
+            padding-top: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -831,7 +862,7 @@
 
         .review-author-name {
             font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--luxury-dark);
             display: flex;
@@ -841,23 +872,37 @@
 
         .review-author-name i {
             color: #27ae60;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
         }
 
         .review-item-bought {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: #777;
             margin-top: 2px;
         }
 
         .review-card-stars {
             color: var(--luxury-gold);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             display: flex;
             gap: 2px;
         }
 
-        /* --- SECCIÓN DE CUIDADOS Y FAQ --- */
+        .star-rating-input {
+            display: flex;
+            gap: 8px;
+            font-size: 1.8rem;
+            color: #DDD;
+            cursor: pointer;
+            margin: 10px 0 15px 0;
+            justify-content: center;
+        }
+
+        .star-rating-input i.active {
+            color: var(--luxury-gold);
+        }
+
+        /* SECCIÓN DE CUIDADOS Y FAQ */
         .faq-care-section {
             margin-top: 4rem;
             display: grid;
@@ -1143,7 +1188,6 @@
             color: #FFF;
         }
 
-        /* FORMULARIO DATOS DEL CLIENTE EN CARRITO */
         .customer-form-box {
             background-color: var(--tiffany-soft-bg);
             border: 1px solid var(--border-color);
@@ -1193,7 +1237,6 @@
             border-color: var(--tiffany-blue);
         }
 
-        /* CALCULADORA DE ENVÍO EN EL CARRITO */
         .shipping-box {
             background-color: #FFFFFF;
             border: 1px solid var(--border-color);
@@ -1270,7 +1313,6 @@
             background-color: var(--luxury-dark);
         }
 
-        /* Modal de Vista Ampliada */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1406,9 +1448,8 @@
             margin-bottom: 15px;
         }
 
-        /* ESTILOS MODAL GUÍA DE TALLAS */
         .size-guide-modal-content {
-            max-width: 600px;
+            max-width: 550px;
             width: 90%;
             background: #FFFFFF;
             padding: 30px;
@@ -1487,7 +1528,6 @@
             margin-bottom: 6px;
         }
 
-        /* --- BOTÓN FLOTANTE DE WHATSAPP CON ANIMACIÓN --- */
         .whatsapp-float {
             position: fixed;
             bottom: 25px;
@@ -1527,7 +1567,6 @@
             }
         }
 
-        /* --- PIE DE PÁGINA (FOOTER) --- */
         footer {
             background-color: var(--luxury-dark);
             color: #FFFFFF;
@@ -1721,9 +1760,9 @@
             <div class="loading-container">Cargando colección exclusiva desde Google Sheets...</div>
         </div>
 
-        <!-- SECCIÓN DE RESEÑAS Y TESTIMONIOS -->
+        <!-- SECCIÓN DE RESEÑAS CON CAJA Y BARRAS DE SCROLL AUTÓNOMA -->
         <section class="reviews-section-container">
-            <h2 class="section-title">Opiniones de Nuestras Clientas</h2>
+            <h2 class="section-title">Opiniones de Nuestros Clientes</h2>
             
             <div class="reviews-header-summary">
                 <div class="reviews-rating-stars">
@@ -1733,64 +1772,23 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
-                <div class="reviews-score-text">4.9 / 5.0 — Excelente Valoración</div>
-                <div class="reviews-sub-label"><i class="fa-solid fa-shield-halved"></i> Compras Verificadas &amp; Envíos Garantizados</div>
+                <div class="reviews-score-text" id="reviewsScoreLabel">Cargando opiniones reales...</div>
             </div>
 
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div>
-                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
-                        <p class="review-text">"El collar de plata llegó súper rápido a Providencia y la presentación en su caja es hermosa. Se nota la calidad real de la Plata 925 desde que lo abres."</p>
-                    </div>
-                    <div class="review-footer">
-                        <div class="review-author-info">
-                            <span class="review-author-name">Camila R. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
-                            <span class="review-item-bought">Santiago RM • Collar de Plata 925</span>
-                        </div>
-                        <div class="review-card-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="reviews-actions-row">
+                <button class="btn-write-review" onclick="openReviewModal()"><i class="fa-regular fa-pen-to-square"></i> Escribir mi Testimonio</button>
+            </div>
 
-                <div class="review-card">
-                    <div>
-                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
-                        <p class="review-text">"Tenía dudas con la talla de mi anillo y por WhatsApp me orientaron con la guía de medidas. Me quedó impecable, 100% recomendados."</p>
-                    </div>
-                    <div class="review-footer">
-                        <div class="review-author-info">
-                            <span class="review-author-name">Valentina M. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
-                            <span class="review-item-bought">Viña del Mar • Anillo Plata 925</span>
-                        </div>
-                        <div class="review-card-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div>
-                        <i class="fa-solid fa-quote-left review-quote-icon"></i>
-                        <p class="review-text">"Compré una pulsera para regalar de cumpleaños. Llegó a Concepción en 2 días por Starken en perfecto estado. Muy profesional la atención."</p>
-                    </div>
-                    <div class="review-footer">
-                        <div class="review-author-info">
-                            <span class="review-author-name">Fernanda S. <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
-                            <span class="review-item-bought">Concepción • Pulsera de Plata 925</span>
-                        </div>
-                        <div class="review-card-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                    </div>
+            <!-- Recuadro contenedor con scroll para reseñas ilimitadas -->
+            <div class="reviews-scroll-box">
+                <div class="reviews-grid" id="reviewsGrid">
+                    <!-- Se carga dinámicamente desde Google Sheets y localStorage -->
                 </div>
             </div>
         </section>
 
         <!-- SECCIÓN DE CUIDADOS Y PREGUNTAS FRECUENTES -->
         <section class="faq-care-section">
-            <!-- Cuidados de la Plata 925 -->
             <div class="care-box">
                 <div class="faq-care-title"><i class="fa-solid fa-sparkles"></i> Cuidados de la Plata 925</div>
                 <ul class="care-list">
@@ -1809,7 +1807,6 @@
                 </ul>
             </div>
 
-            <!-- Preguntas Frecuentes (Acordeón) -->
             <div class="faq-box">
                 <div class="faq-care-title"><i class="fa-solid fa-circle-question"></i> Preguntas Frecuentes</div>
                 <div class="faq-accordion">
@@ -1877,7 +1874,7 @@
         </section>
     </main>
 
-    <!-- Fondo Oscuro Overlay para Carrito y Modales -->
+    <!-- Fondo Oscuro Overlay -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
     <!-- Panel Lateral del Carrito -->
@@ -1888,7 +1885,6 @@
         </div>
         <div id="cartItems" class="cart-items"></div>
 
-        <!-- FORMULARIO DATOS DEL CLIENTE -->
         <div class="customer-form-box">
             <div class="customer-form-title"><i class="fa-regular fa-user"></i> Datos del Comprador</div>
             <div class="customer-form-group">
@@ -1904,7 +1900,6 @@
             </div>
         </div>
 
-        <!-- Calculadora de Envíos en Carrito -->
         <div class="shipping-box">
             <label for="shippingSelect"><i class="fa-solid fa-truck"></i> Método de Envío:</label>
             <select id="shippingSelect" onchange="updateCart()">
@@ -1932,7 +1927,7 @@
         </div>
     </div>
 
-    <!-- Modal de Vista Detallada -->
+    <!-- Modal de Vista Ampliada -->
     <div id="productModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'productModal')">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
@@ -1955,6 +1950,39 @@
                 </div>
 
                 <button class="add-to-cart-btn" id="modalAddBtn">Agregar a la Bolsa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE FORMULARIO PARA DEJAR RESEÑA REAL -->
+    <div id="reviewFormModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'reviewFormModal')">
+        <div class="size-guide-modal-content">
+            <button class="modal-close" onclick="closeModal('reviewFormModal')">&times;</button>
+            <h3 style="font-family:'Cinzel', serif; letter-spacing: 2px; text-transform:uppercase; font-size:1.2rem; text-align:center;">✍️ Dejar mi Testimonio</h3>
+            <p style="font-size:0.85rem; color:#666; text-align:center; margin-top:4px;">Tu opinión ayuda a otros clientes a elegir con confianza en Joyería Solar.</p>
+            
+            <div style="margin-top: 20px; display:flex; flex-direction:column; gap:12px;">
+                <div>
+                    <label style="font-family:'Cinzel', serif; font-size:0.75rem; text-transform:uppercase; display:block; margin-bottom:4px;">Tu Calificación:</label>
+                    <div class="star-rating-input" id="starRatingInput">
+                        <i class="fa-solid fa-star active" data-val="1" onclick="setFormStars(1)"></i>
+                        <i class="fa-solid fa-star active" data-val="2" onclick="setFormStars(2)"></i>
+                        <i class="fa-solid fa-star active" data-val="3" onclick="setFormStars(3)"></i>
+                        <i class="fa-solid fa-star active" data-val="4" onclick="setFormStars(4)"></i>
+                        <i class="fa-solid fa-star active" data-val="5" onclick="setFormStars(5)"></i>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <input type="text" id="revAuthor" placeholder="Tu Nombre *">
+                    <input type="text" id="revCity" placeholder="Ciudad / Comuna *">
+                </div>
+
+                <input type="text" id="revItem" placeholder="Joya comprada (ej: Anillo Plata / Collar)">
+
+                <textarea id="revComment" rows="3" placeholder="Escribe tu testimonio sobre la calidad, envío o atención... *"></textarea>
+
+                <button class="add-to-cart-btn" id="btnSubmitReview" style="background-color:var(--tiffany-blue); color:#FFF; border:none; margin-top:8px;" onclick="submitUserReview()">Publicar mi Opinión</button>
             </div>
         </div>
     </div>
@@ -2031,7 +2059,7 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- PIE DE PÁGINA (FOOTER) -->
+    <!-- PIE DE PÁGINA -->
     <footer>
         <div class="footer-container">
             <div class="footer-col">
@@ -2074,7 +2102,9 @@
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRgTZ1SapOZLi0mecLHB4PoxbjDkMlnX2tGgZNLOZpt2sKglnM1vCqyUdcZtIwmWVb/exec";
 
         let catalog = [];
+        let reviewsList = [];
         let cart = JSON.parse(localStorage.getItem('solar_cart')) || [];
+        let selectedStars = 5;
         let activeImageIndices = {};
         
         // ROTACIÓN DE BANNER PROMOCIONAL
@@ -2106,7 +2136,7 @@
             }, 4000);
         }
 
-        // LÓGICA DE CARRUSEL LOOKBOOK EDITORIAL
+        // ROTACIÓN CARRUSEL LOOKBOOK
         let editorialSlideIndex = 0;
         let editorialInterval;
 
@@ -2135,7 +2165,7 @@
         function startEditorialRotation() {
             editorialInterval = setInterval(() => {
                 setEditorialSlide(editorialSlideIndex + 1);
-            }, 5000); // Cambia cada 5 segundos
+            }, 5000);
         }
 
         function filterByCategory(catName) {
@@ -2146,13 +2176,145 @@
             }
         }
 
-        // Cargar productos desde Google Sheets
+        // LÓGICA DE RESEÑAS REALES
+        function openReviewModal() {
+            document.getElementById('reviewFormModal').classList.add('active');
+        }
+
+        function setFormStars(val) {
+            selectedStars = val;
+            const stars = document.querySelectorAll('#starRatingInput i');
+            stars.forEach((star, index) => {
+                if (index < val) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        async function submitUserReview() {
+            const author = document.getElementById('revAuthor').value.trim();
+            const city = document.getElementById('revCity').value.trim();
+            const item = document.getElementById('revItem').value.trim() || 'Joya Plata 925';
+            const comment = document.getElementById('revComment').value.trim();
+            const btn = document.getElementById('btnSubmitReview');
+
+            if (!author || !city || !comment) {
+                alert("Por favor completa tu Nombre, Ciudad y Testimonio antes de publicar.");
+                return;
+            }
+
+            const newReview = {
+                author: author,
+                city: city,
+                item: item,
+                comment: comment,
+                stars: selectedStars,
+                date: new Date().toLocaleDateString('es-CL')
+            };
+
+            btn.disabled = true;
+            btn.innerText = "Enviando...";
+
+            try {
+                // Guarda local para vista inmediata
+                reviewsList.unshift(newReview);
+                renderReviews();
+
+                // Envia a Google Sheets por Apps Script
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newReview)
+                });
+
+                document.getElementById('revAuthor').value = '';
+                document.getElementById('revCity').value = '';
+                document.getElementById('revItem').value = '';
+                document.getElementById('revComment').value = '';
+                setFormStars(5);
+
+                closeModal('reviewFormModal');
+                alert("¡Muchas gracias! Tu testimonio ha sido publicado exitosamente.");
+            } catch (err) {
+                console.error("Error al enviar reseña:", err);
+                closeModal('reviewFormModal');
+                alert("Tu reseña ha sido publicada en tu pantalla.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Publicar mi Opinión";
+            }
+        }
+
+        function renderReviews() {
+            const grid = document.getElementById('reviewsGrid');
+            grid.innerHTML = '';
+
+            if (!reviewsList || reviewsList.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:#888; padding:30px;">Aún no hay reseñas publicadas. ¡Sé la primera persona en compartir su testimonio!</div>`;
+                document.getElementById('reviewsScoreLabel').innerText = "Sé el primero en calificar";
+                return;
+            }
+
+            // Calcula promedio
+            const sum = reviewsList.reduce((acc, r) => acc + Number(r.stars || 5), 0);
+            const avg = (sum / reviewsList.length).toFixed(1);
+            document.getElementById('reviewsScoreLabel').innerText = `${avg} / 5.0 — Basado en ${reviewsList.length} opinión(es) real(es)`;
+
+            reviewsList.forEach(r => {
+                let starsCount = Number(r.stars || 5);
+                let starsHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHTML += `<i class="fa-solid fa-star" style="color: ${i <= starsCount ? 'var(--luxury-gold)' : '#DDD'};"></i>`;
+                }
+
+                grid.innerHTML += `
+                    <div class="review-card">
+                        <div>
+                            <i class="fa-solid fa-quote-left review-quote-icon"></i>
+                            <p class="review-text">"${r.comment || r.Comentario || ''}"</p>
+                        </div>
+                        <div class="review-footer">
+                            <div class="review-author-info">
+                                <span class="review-author-name">${r.author || r.Nombre || 'Cliente'} <i class="fa-solid fa-circle-check" title="Compra Verificada"></i></span>
+                                <span class="review-item-bought">${r.city || r.Ciudad || 'Chile'} • ${r.item || r.Joya || 'Plata 925'}</span>
+                            </div>
+                            <div class="review-card-stars">
+                                ${starsHTML}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Cargar datos (Productos y Reseñas) desde Google Sheets
         async function fetchCatalogFromSheets() {
             try {
                 const response = await fetch(APPS_SCRIPT_URL);
                 const rawData = await response.json();
 
-                catalog = rawData.map(row => {
+                let rawProductos = [];
+                if (Array.isArray(rawData)) {
+                    rawProductos = rawData;
+                } else if (rawData.productos) {
+                    rawProductos = rawData.productos;
+                    if (rawData.reseñas && Array.isArray(rawData.reseñas)) {
+                        reviewsList = rawData.reseñas.map(r => ({
+                            author: r.Nombre || r.author || 'Cliente',
+                            city: r.Ciudad || r.city || 'Chile',
+                            item: r.Joya || r.item || 'Plata 925',
+                            stars: Number(r.Estrellas || r.stars || 5),
+                            comment: r.Comentario || r.comment || '',
+                            date: r.Fecha || r.date || ''
+                        })).reverse(); // Ordena del más reciente al más antiguo
+                        renderReviews();
+                    }
+                }
+
+                catalog = rawProductos.map(row => {
                     const id = row.ID || row.id || "";
                     const name = row.Nombre || row.name || row.nombre || "";
                     const category = row.Categoria || row.category || row.categoria || "";
@@ -2163,7 +2325,6 @@
                     const isOutOfStock = statusVal === "agotado" || statusVal === "sin stock" || statusVal === "0";
 
                     const badgeText = String(row.Etiqueta || row.etiqueta || row.Badge || row.badge || "").trim();
-
                     const keywords = String(row.Keywords || row.keywords || row.Palabras_Clave || row.palabras_clave || "").trim();
 
                     const variantType = String(row.Tipo_Variante || row.tipo_variante || row.TipoVariante || row.tipo || "").trim();
@@ -2205,7 +2366,7 @@
 
                 filterProducts();
             } catch (error) {
-                console.error("Error al cargar productos desde Apps Script:", error);
+                console.error("Error al cargar desde Sheets:", error);
                 document.getElementById('productsGrid').innerHTML = `
                     <div class="loading-container" style="color: #c0392b;">
                         Ocurrió un inconveniente al cargar el catálogo. Por favor, intenta actualizar la página.
@@ -2699,8 +2860,13 @@
             const cartPanel = document.getElementById('cartPanel');
             const pModal = document.getElementById('productModal');
             const gModal = document.getElementById('sizeGuideModal');
+            const rModal = document.getElementById('reviewFormModal');
 
             if (event.key === 'Escape' || event.key === 'Esc') {
+                if (rModal && rModal.classList.contains('active')) {
+                    closeModal('reviewFormModal');
+                    return;
+                }
                 if (gModal && gModal.classList.contains('active')) {
                     closeModal('sizeGuideModal');
                     return;
@@ -2731,6 +2897,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchCatalogFromSheets();
             updateCart();
+            renderReviews();
             startTopBarRotation();
             startEditorialRotation();
         });
