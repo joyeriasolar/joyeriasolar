@@ -493,6 +493,13 @@
             text-align: left;
         }
 
+        .variant-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
         .variant-selector-box label {
             font-family: 'Cinzel', serif;
             font-size: 0.68rem;
@@ -500,7 +507,24 @@
             text-transform: uppercase;
             color: #666666;
             display: block;
-            margin-bottom: 4px;
+        }
+
+        /* BOTÓN / ENLACE DE GUÍA DE TALLAS */
+        .size-guide-link {
+            font-size: 0.68rem;
+            color: var(--tiffany-blue);
+            cursor: pointer;
+            text-decoration: underline;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            transition: color 0.2s;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+
+        .size-guide-link:hover {
+            color: var(--luxury-dark);
         }
 
         .variant-selector-box select {
@@ -593,7 +617,7 @@
             line-height: 1.5;
         }
 
-        /* Overlay para Carrito */
+        /* Overlay para Carrito y Modales */
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -712,7 +736,7 @@
             color: #FFF;
         }
 
-        /* --- FORMULARIO DATOS DEL CLIENTE EN CARRITO --- */
+        /* FORMULARIO DATOS DEL CLIENTE EN CARRITO */
         .customer-form-box {
             background-color: var(--tiffany-soft-bg);
             border: 1px solid var(--border-color);
@@ -871,6 +895,8 @@
             flex-direction: column;
             gap: 25px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @media (min-width: 580px) {
@@ -971,6 +997,87 @@
             font-size: 1.5rem;
             font-style: italic;
             margin-bottom: 15px;
+        }
+
+        /* --- ESTILOS MODAL GUÍA DE TALLAS --- */
+        .size-guide-modal-content {
+            max-width: 600px;
+            width: 90%;
+            background: #FFFFFF;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .guide-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            margin-top: 15px;
+        }
+
+        .guide-tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #777;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .guide-tab-btn.active {
+            color: var(--tiffany-blue);
+            border-bottom-color: var(--tiffany-blue);
+            font-weight: 600;
+        }
+
+        .guide-tab-content {
+            display: none;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .guide-tab-content.active {
+            display: block;
+        }
+
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .size-table th, .size-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .size-table th {
+            background-color: var(--tiffany-soft-bg);
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--luxury-dark);
+        }
+
+        .guide-step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .guide-step-list li {
+            margin-bottom: 6px;
         }
 
         /* --- BOTÓN FLOTANTE DE WHATSAPP CON ANIMACIÓN --- */
@@ -1180,7 +1287,7 @@
         </section>
     </main>
 
-    <!-- Fondo Oscuro Overlay para Carrito -->
+    <!-- Fondo Oscuro Overlay para Carrito y Modales -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
     <!-- Panel Lateral del Carrito -->
@@ -1236,9 +1343,9 @@
     </div>
 
     <!-- Modal de Vista Detallada -->
-    <div id="productModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div id="productModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'productModal')">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
             <div class="modal-gallery-wrapper">
                 <div class="modal-img-container" id="modalImgContainer"></div>
                 <div class="gallery-thumbnails" id="galleryThumbnails"></div>
@@ -1250,11 +1357,78 @@
                 <div class="modal-price" id="modalPrice"></div>
                 
                 <div id="modalVariantBox" class="variant-selector-box" style="display:none; margin-bottom: 20px;">
-                    <label id="modalVariantLabel" for="modalVariantSelect"></label>
+                    <div class="variant-header-row">
+                        <label id="modalVariantLabel" for="modalVariantSelect"></label>
+                        <button class="size-guide-link" onclick="openSizeGuide('Anillos')">📐 Guía de Tallas</button>
+                    </div>
                     <select id="modalVariantSelect"></select>
                 </div>
 
                 <button class="add-to-cart-btn" id="modalAddBtn">Agregar a la Bolsa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INTERACTIVO DE GUÍA DE TALLAS -->
+    <div id="sizeGuideModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'sizeGuideModal')">
+        <div class="size-guide-modal-content">
+            <button class="modal-close" onclick="closeModal('sizeGuideModal')">&times;</button>
+            <h3 style="font-family:'Cinzel', serif; letter-spacing: 2px; text-transform:uppercase; font-size:1.3rem;">📐 Guía de Tallas y Medidas</h3>
+            
+            <div class="guide-tabs">
+                <button class="guide-tab-btn active" onclick="switchGuideTab('rings')">💍 Anillos</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('necklaces')">📿 Collares</button>
+                <button class="guide-tab-btn" onclick="switchGuideTab('bracelets')">✨ Pulseras</button>
+            </div>
+
+            <!-- Tab Anillos -->
+            <div id="guide-tab-rings" class="guide-tab-content active">
+                <p><strong>¿Cómo saber tu talla de anillo?</strong></p>
+                <ol class="guide-step-list">
+                    <li>Toma un anillo que te quede bien en el dedo deseado.</li>
+                    <li>Con una regla, mide el <strong>diámetro interno</strong> (de borde a borde interior, sin incluir el metal).</li>
+                    <li>Compara los milímetros ($mm$) con la siguiente tabla:</li>
+                </ol>
+
+                <table class="size-table">
+                    <thead>
+                        <tr>
+                            <th>Talla Solar</th>
+                            <th>Diámetro Interno (mm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Talla 8</td><td>18.1 mm</td></tr>
+                        <tr><td>Talla 10</td><td>18.9 mm</td></tr>
+                        <tr><td>Talla 12</td><td>19.8 mm</td></tr>
+                        <tr><td>Talla 14</td><td>20.6 mm</td></tr>
+                        <tr><td>Talla 16</td><td>21.4 mm</td></tr>
+                        <tr><td>Talla 18</td><td>22.2 mm</td></tr>
+                        <tr><td>Talla 20</td><td>23.0 mm</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tab Collares -->
+            <div id="guide-tab-necklaces" class="guide-tab-content">
+                <p><strong>Largo estándar de Collares y Cadenas:</strong></p>
+                <ul class="guide-step-list">
+                    <li><strong>50 cm:</strong> Cae justo sobre la clavícula (estilo corto/mediano tradicional).</li>
+                    <li><strong>60 cm:</strong> Cae sobre el pecho, ideal para combinar con dijes más grandes o usar en capas.</li>
+                    <li><strong>70 cm:</strong> Cadena larga, llega a la altura del busto.</li>
+                </ul>
+                <p style="font-size:0.8rem; color:#666; font-style:italic;">💡 Tip: Usa una cinta métrica o un cordón alrededor del cuello para simular la caída antes de elegir.</p>
+            </div>
+
+            <!-- Tab Pulseras -->
+            <div id="guide-tab-bracelets" class="guide-tab-content">
+                <p><strong>¿Cómo medir tu muñeca para la pulsera?</strong></p>
+                <ol class="guide-step-list">
+                    <li>Rodea tu muñeca con una cinta métrica flexible o una tira de papel justo sobre el hueso.</li>
+                    <li>Anota la medida en centímetros ($cm$).</li>
+                    <li><strong>Suma 1 cm a 1.5 cm</strong> a esa medida para obtener una pulsera cómoda que no apriete.</li>
+                </ol>
+                <p><em>Ejemplo: Si tu muñeca mide 17 cm, tu medida ideal es 18 cm o 19 cm.</em></p>
             </div>
         </div>
     </div>
@@ -1467,9 +1641,13 @@
                 if (p.variantsList && p.variantsList.length > 0) {
                     const labelText = p.variantType || 'Seleccionar Medida';
                     let optionsHTML = p.variantsList.map(v => `<option value="${v}">${v}</option>`).join('');
+                    
                     variantHTML = `
                         <div class="variant-selector-box" onclick="event.stopPropagation();">
-                            <label for="variant-${p.id}">${labelText}:</label>
+                            <div class="variant-header-row">
+                                <label for="variant-${p.id}">${labelText}:</label>
+                                <button class="size-guide-link" onclick="openSizeGuide('${p.category}')">📐 Guía de Tallas</button>
+                            </div>
                             <select id="variant-${p.id}">
                                 ${optionsHTML}
                             </select>
@@ -1706,7 +1884,7 @@
                 }
             } else {
                 imgContainer.innerHTML = `<div class="placeholder-image">
-                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                     <div class="placeholder-text">Joyería Solar</div>
                    </div>`;
             }
@@ -1718,7 +1896,7 @@
                     selectedVal = `${product.variantType ? product.variantType + ' ' : ''}${modalVarSelect.value}`;
                 }
                 addToCart(product.id, selectedVal);
-                closeModal();
+                closeModal('productModal');
             };
 
             document.getElementById('productModal').classList.add('active');
@@ -1734,13 +1912,42 @@
             thumbElement.classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
+        /* LÓGICA GUÍA DE TALLAS */
+        function openSizeGuide(categoryName = '') {
+            const modal = document.getElementById('sizeGuideModal');
+            if (modal) {
+                modal.classList.add('active');
+                
+                const cat = categoryName.toLowerCase();
+                if (cat.includes('collar') || cat.includes('cadena')) {
+                    switchGuideTab('necklaces');
+                } else if (cat.includes('pulsera')) {
+                    switchGuideTab('bracelets');
+                } else {
+                    switchGuideTab('rings');
+                }
+            }
         }
 
-        function closeModalOnOverlay(e) {
-            if (e.target.id === 'productModal') {
-                closeModal();
+        function switchGuideTab(tabName) {
+            document.querySelectorAll('.guide-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.guide-tab-content').forEach(content => content.classList.remove('active'));
+
+            const activeBtn = Array.from(document.querySelectorAll('.guide-tab-btn')).find(b => b.innerText.toLowerCase().includes(tabName === 'rings' ? 'anillos' : tabName === 'necklaces' ? 'collares' : 'pulseras'));
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const contentEl = document.getElementById(`guide-tab-${tabName}`);
+            if (contentEl) contentEl.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('active');
+        }
+
+        function closeModalOnOverlay(e, modalId) {
+            if (e.target.id === modalId) {
+                closeModal(modalId);
             }
         }
 
@@ -1751,7 +1958,6 @@
                 return;
             }
 
-            // Captura de datos del cliente
             const name = document.getElementById('custName').value.trim();
             const rut = document.getElementById('custRut').value.trim();
             const address = document.getElementById('custAddress').value.trim();
@@ -1814,11 +2020,16 @@
         document.addEventListener('keydown', function(event) {
             const searchInput = document.getElementById('searchInput');
             const cartPanel = document.getElementById('cartPanel');
-            const modal = document.getElementById('productModal');
+            const pModal = document.getElementById('productModal');
+            const gModal = document.getElementById('sizeGuideModal');
 
             if (event.key === 'Escape' || event.key === 'Esc') {
-                if (modal.classList.contains('active')) {
-                    closeModal();
+                if (gModal && gModal.classList.contains('active')) {
+                    closeModal('sizeGuideModal');
+                    return;
+                }
+                if (pModal && pModal.classList.contains('active')) {
+                    closeModal('productModal');
                     return;
                 }
                 if (searchInput && (document.activeElement === searchInput || searchInput.value !== "")) {
