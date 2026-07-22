@@ -280,171 +280,109 @@
             padding: 0 1.5rem 4rem 1.5rem;
         }
 
-        /* CARRUSEL LOOKBOOK EDITORIAL ESTILO TIFFANY */
+        /* --- CARRUSEL ESTILO TIFFANY & CO. (CENTRADO CON PEEK LATERAL) --- */
         .editorial-section {
             margin-bottom: 4rem;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
         }
 
-        .editorial-carousel {
+        .editorial-carousel-wrapper {
             position: relative;
             width: 100%;
-            height: 420px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background-color: #FFFFFF;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (max-width: 768px) {
-            .editorial-carousel {
-                height: 380px;
-            }
+        .editorial-track {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+            width: 100%;
         }
 
         .editorial-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            pointer-events: none;
+            flex: 0 0 65%;
+            margin: 0 15px;
+            height: 480px;
+            opacity: 0.45;
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            position: relative;
+            cursor: pointer;
         }
 
         .editorial-slide.active {
             opacity: 1;
-            pointer-events: auto;
         }
 
-        .editorial-img-container {
-            width: 55%;
-            height: 100%;
-            background-position: center;
-            background-size: cover;
-            position: relative;
-        }
-
-        .editorial-content {
-            width: 45%;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-color: #FFFFFF;
-            text-align: left;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
             .editorial-slide {
-                flex-direction: column;
-            }
-            .editorial-img-container {
-                width: 100%;
-                height: 60%;
-            }
-            .editorial-content {
-                width: 100%;
-                height: 40%;
-                padding: 20px;
-                text-align: center;
+                flex: 0 0 82%;
+                height: 320px;
+                margin: 0 8px;
             }
         }
 
-        .editorial-tag {
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--tiffany-blue);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .editorial-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--luxury-dark);
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .editorial-desc {
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .editorial-btn {
-            display: inline-block;
-            align-self: flex-start;
-            padding: 10px 24px;
-            background-color: transparent;
-            color: var(--luxury-dark);
-            border: 1px solid var(--luxury-dark);
-            font-family: 'Cinzel', serif;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .editorial-btn {
-                align-self: center;
+        @media (max-width: 480px) {
+            .editorial-slide {
+                flex: 0 0 90%;
+                height: 240px;
+                margin: 0 5px;
             }
         }
 
-        .editorial-btn:hover {
-            background-color: var(--tiffany-blue);
-            color: #FFFFFF;
-            border-color: var(--tiffany-blue);
+        .editorial-img {
+            width: 100%;
+            height: 100%;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
         }
 
+        /* FLECHAS FINAS SÚTILES ESTILO TIFFANY */
         .editorial-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.75);
+            border: none;
             color: var(--luxury-dark);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            font-size: 1.5rem;
             cursor: pointer;
+            z-index: 20;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            transition: all 0.3s;
-            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .editorial-arrow:hover {
-            background-color: var(--tiffany-blue);
-            color: #FFFFFF;
-            border-color: var(--tiffany-blue);
+            background-color: #FFFFFF;
+            color: var(--tiffany-blue);
+            box-shadow: 0 6px 18px rgba(10, 186, 181, 0.2);
         }
 
-        .editorial-arrow.prev { left: 15px; }
-        .editorial-arrow.next { right: 15px; }
+        .editorial-arrow.prev { left: 18%; }
+        .editorial-arrow.next { right: 18%; }
+
+        @media (max-width: 850px) {
+            .editorial-arrow.prev { left: 10px; }
+            .editorial-arrow.next { right: 10px; }
+        }
 
         .editorial-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
-            gap: 8px;
-            z-index: 10;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
         }
 
         .editorial-dot {
@@ -453,12 +391,12 @@
             border-radius: 50%;
             background-color: rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .editorial-dot.active {
             background-color: var(--tiffany-blue);
-            width: 22px;
+            width: 24px;
             border-radius: 4px;
         }
 
@@ -517,7 +455,7 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
-        /* --- ESTILOS DE ETIQUETAS Y COLORES DINÁMICOS --- */
+        /* ETIQUETAS Y COLORES DINÁMICOS */
         .product-badge {
             position: absolute;
             top: 12px;
@@ -683,7 +621,6 @@
             font-style: italic;
         }
 
-        /* SELECTOR DE TALLAS / LARGOS */
         .variant-selector-box {
             margin-bottom: 12px;
             text-align: left;
@@ -1104,7 +1041,7 @@
             pointer-events: auto;
         }
 
-        /* --- PANEL LATERAL DEL CARRITO --- */
+        /* PANEL LATERAL DEL CARRITO */
         #cartPanel {
             position: fixed;
             top: 0;
@@ -1392,7 +1329,7 @@
             background-color: var(--luxury-dark);
         }
 
-        /* --- MODAL Y CONTENEDOR DE IMAGEN CON EFECTO LUPA / ZOOM --- */
+        /* MODAL Y CONTENEDOR DE IMAGEN CON EFECTO LUPA */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1455,7 +1392,6 @@
             margin: 0 auto;
         }
 
-        /* CONTENEDOR DE LUPA */
         .modal-img-container {
             width: 100%;
             height: 280px;
@@ -1794,50 +1730,35 @@
 
     <main id="catalogSection">
 
-        <!-- CARRUSEL LOOKBOOK EDITORIAL ESTILO TIFFANY & CO. -->
+        <!-- CARRUSEL CON EFECTO PEEK / VISTA PREVIA LATERAL (ESTILO TIFFANY & CO.) -->
         <section class="editorial-section">
-            <div class="editorial-carousel" id="editorialCarousel">
+            <div class="editorial-carousel-wrapper">
                 <button class="editorial-arrow prev" onclick="moveEditorialSlide(-1)">&#10094;</button>
+                
+                <div class="editorial-track" id="editorialTrack">
+                    <!-- Diapositiva 1 -->
+                    <div class="editorial-slide active" onclick="setEditorialSlide(0)">
+                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1600&auto=format&fit=crop');"></div>
+                    </div>
+
+                    <!-- Diapositiva 2 -->
+                    <div class="editorial-slide" onclick="setEditorialSlide(1)">
+                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1600&auto=format&fit=crop');"></div>
+                    </div>
+
+                    <!-- Diapositiva 3 -->
+                    <div class="editorial-slide" onclick="setEditorialSlide(2)">
+                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1611591475155-4284fa289329?q=80&w=1600&auto=format&fit=crop');"></div>
+                    </div>
+                </div>
+
                 <button class="editorial-arrow next" onclick="moveEditorialSlide(1)">&#10095;</button>
+            </div>
 
-                <!-- Diapositiva 1 -->
-                <div class="editorial-slide active">
-                    <div class="editorial-img-container" style="background-image: url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop');"></div>
-                    <div class="editorial-content">
-                        <div class="editorial-tag">Lookbook 2026</div>
-                        <h2 class="editorial-title">Colección Brillo Solar</h2>
-                        <p class="editorial-desc">Diseños delicados que capturan la luz natural. Piezas trabajadas a mano en fina Plata de Ley 925 certificada para complementar tu elegancia cotidiana.</p>
-                        <a href="#productsGrid" class="editorial-btn" onclick="filterByCategory('Collares')">Ver Collares</a>
-                    </div>
-                </div>
-
-                <!-- Diapositiva 2 -->
-                <div class="editorial-slide">
-                    <div class="editorial-img-container" style="background-image: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1200&auto=format&fit=crop');"></div>
-                    <div class="editorial-content">
-                        <div class="editorial-tag">Edición Exclusiva</div>
-                        <h2 class="editorial-title">Anillos de Alta Pureza</h2>
-                        <p class="editorial-desc">Símbolos atemporales de distinción. Encuentra tu medida perfecta con nuestra guía interactiva de tallas y luce la auténtica Plata de Ley.</p>
-                        <a href="#productsGrid" class="editorial-btn" onclick="filterByCategory('Anillos')">Ver Anillos</a>
-                    </div>
-                </div>
-
-                <!-- Diapositiva 3 -->
-                <div class="editorial-slide">
-                    <div class="editorial-img-container" style="background-image: url('https://images.unsplash.com/photo-1611591475155-4284fa289329?q=80&w=1200&auto=format&fit=crop');"></div>
-                    <div class="editorial-content">
-                        <div class="editorial-tag">Tendencia &amp; Estilo</div>
-                        <h2 class="editorial-title">Pulseras &amp; Esclavas</h2>
-                        <p class="editorial-desc">Detalles que marcan la diferencia. El toque moderno y sofisticado que transforma cualquier atuendo en una declaración de estilo.</p>
-                        <a href="#productsGrid" class="editorial-btn" onclick="filterByCategory('Pulsera Hombre')">Ver Pulseras</a>
-                    </div>
-                </div>
-
-                <div class="editorial-dots">
-                    <span class="editorial-dot active" onclick="setEditorialSlide(0)"></span>
-                    <span class="editorial-dot" onclick="setEditorialSlide(1)"></span>
-                    <span class="editorial-dot" onclick="setEditorialSlide(2)"></span>
-                </div>
+            <div class="editorial-dots">
+                <span class="editorial-dot active" onclick="setEditorialSlide(0)"></span>
+                <span class="editorial-dot" onclick="setEditorialSlide(1)"></span>
+                <span class="editorial-dot" onclick="setEditorialSlide(2)"></span>
             </div>
         </section>
 
@@ -2209,22 +2130,22 @@
             const lower = badgeText.toLowerCase().trim();
 
             if (lower.includes('última') || lower.includes('ultima') || lower.includes('pocas')) {
-                return 'badge-rosewood'; // Rosewood para bajo stock
+                return 'badge-rosewood';
             }
             if (lower.includes('única') || lower.includes('unica') || lower.includes('limitada') || lower.includes('exclusiva')) {
-                return 'badge-gold'; // Champagne Gold para piezas únicas
+                return 'badge-gold';
             }
             if (lower.includes('precio especial') || lower.includes('oferta') || lower.includes('descuento')) {
-                return 'badge-charcoal'; // Slate Charcoal para ofertas
+                return 'badge-charcoal';
             }
             if (lower.includes('nuevo') || lower.includes('primavera') || lower.includes('colección') || lower.includes('coleccion')) {
-                return 'badge-tiffany'; // Turquesa Tiffany para novedades
+                return 'badge-tiffany';
             }
 
-            return 'badge-tiffany'; // Por defecto
+            return 'badge-tiffany';
         }
 
-        // ROTACIÓN DE BANNER PROMOCIONAL
+        // ROTACIÓN DE BANNER PROMOCIONAL SUPERIOR
         let topBarSlideIndex = 0;
         let topBarInterval;
 
@@ -2253,24 +2174,40 @@
             }, 4000);
         }
 
-        // ROTACIÓN CARRUSEL LOOKBOOK
+        // --- CARRUSEL EDITORIAL CENTRADO ESTILO TIFFANY & CO. ---
         let editorialSlideIndex = 0;
         let editorialInterval;
 
         function setEditorialSlide(index) {
             const slides = document.querySelectorAll('.editorial-slide');
             const dots = document.querySelectorAll('.editorial-dot');
-            if (slides.length === 0) return;
-
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
+            const track = document.getElementById('editorialTrack');
+            if (!track || slides.length === 0) return;
 
             if (index >= slides.length) editorialSlideIndex = 0;
             else if (index < 0) editorialSlideIndex = slides.length - 1;
             else editorialSlideIndex = index;
 
-            slides[editorialSlideIndex].classList.add('active');
-            if (dots[editorialSlideIndex]) dots[editorialSlideIndex].classList.add('active');
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === editorialSlideIndex);
+            });
+
+            dots.forEach((d, idx) => {
+                d.classList.toggle('active', idx === editorialSlideIndex);
+            });
+
+            // Cálculo preciso de centrado para el desplazamiento horizontal
+            const slideWidth = slides[0].offsetWidth;
+            const style = window.getComputedStyle(slides[0]);
+            const marginLeft = parseFloat(style.marginLeft) || 0;
+            const marginRight = parseFloat(style.marginRight) || 0;
+            const totalWidth = slideWidth + marginLeft + marginRight;
+
+            const containerWidth = track.parentElement.offsetWidth;
+            const centerOffset = (containerWidth - slideWidth) / 2 - marginLeft;
+
+            const translateX = - (editorialSlideIndex * totalWidth) + centerOffset;
+            track.style.transform = `translateX(${translateX}px)`;
         }
 
         function moveEditorialSlide(direction) {
@@ -2282,7 +2219,7 @@
         function startEditorialRotation() {
             editorialInterval = setInterval(() => {
                 setEditorialSlide(editorialSlideIndex + 1);
-            }, 5000);
+            }, 5000); // 5 segundos exactos
         }
 
         function filterByCategory(catName) {
@@ -2556,7 +2493,6 @@
                     `;
                 }
 
-                // Generación de Badge con clase dinámica según el color correspondientes
                 const badgeClass = getBadgeClass(p.badgeText);
                 const badgeHTML = p.badgeText ? `<div class="product-badge ${badgeClass}">${p.badgeText}</div>` : '';
 
@@ -3073,11 +3009,16 @@
             }
         });
 
+        window.addEventListener('resize', () => {
+            setEditorialSlide(editorialSlideIndex);
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             fetchCatalogFromSheets();
             updateCart();
             renderReviews();
             startTopBarRotation();
+            setEditorialSlide(0);
             startEditorialRotation();
         });
     </script>
