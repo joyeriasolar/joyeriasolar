@@ -34,6 +34,8 @@
             --tiffany-soft-bg: #F7FAF9;
             --luxury-dark: #111111;
             --luxury-gold: #C5A059;
+            --rosewood: #8B263E;
+            --slate-charcoal: #2C3E50;
             --card-bg: #FFFFFF;
             --border-color: #E2E8E6;
         }
@@ -515,12 +517,11 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
+        /* --- ESTILOS DE ETIQUETAS Y COLORES DINÁMICOS --- */
         .product-badge {
             position: absolute;
             top: 12px;
             left: 12px;
-            background-color: var(--tiffany-blue);
-            color: #FFFFFF;
             font-family: 'Cinzel', serif;
             font-size: 0.62rem;
             letter-spacing: 1.5px;
@@ -530,6 +531,26 @@
             z-index: 10;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             border-radius: 2px;
+        }
+
+        .badge-rosewood {
+            background-color: var(--rosewood) !important;
+            color: #FFFFFF !important;
+        }
+
+        .badge-gold {
+            background-color: var(--luxury-gold) !important;
+            color: #FFFFFF !important;
+        }
+
+        .badge-tiffany {
+            background-color: var(--tiffany-blue) !important;
+            color: #FFFFFF !important;
+        }
+
+        .badge-charcoal {
+            background-color: var(--slate-charcoal) !important;
+            color: #FFFFFF !important;
         }
 
         .product-image-container {
@@ -734,7 +755,7 @@
             border-color: var(--luxury-dark) !important;
         }
 
-        /* --- SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA --- */
+        /* SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA */
         .reviews-section-container {
             margin-top: 5rem;
             padding: 3rem 2rem;
@@ -2182,6 +2203,27 @@
         let selectedStars = 5;
         let activeImageIndices = {};
         
+        // DETECCIÓN DINÁMICA DE CLASE CSS PARA LAS ETIQUETAS
+        function getBadgeClass(badgeText) {
+            if (!badgeText) return 'badge-tiffany';
+            const lower = badgeText.toLowerCase().trim();
+
+            if (lower.includes('última') || lower.includes('ultima') || lower.includes('pocas')) {
+                return 'badge-rosewood'; // Rosewood para bajo stock
+            }
+            if (lower.includes('única') || lower.includes('unica') || lower.includes('limitada') || lower.includes('exclusiva')) {
+                return 'badge-gold'; // Champagne Gold para piezas únicas
+            }
+            if (lower.includes('precio especial') || lower.includes('oferta') || lower.includes('descuento')) {
+                return 'badge-charcoal'; // Slate Charcoal para ofertas
+            }
+            if (lower.includes('nuevo') || lower.includes('primavera') || lower.includes('colección') || lower.includes('coleccion')) {
+                return 'badge-tiffany'; // Turquesa Tiffany para novedades
+            }
+
+            return 'badge-tiffany'; // Por defecto
+        }
+
         // ROTACIÓN DE BANNER PROMOCIONAL
         let topBarSlideIndex = 0;
         let topBarInterval;
@@ -2514,7 +2556,9 @@
                     `;
                 }
 
-                const badgeHTML = p.badgeText ? `<div class="product-badge">${p.badgeText}</div>` : '';
+                // Generación de Badge con clase dinámica según el color correspondientes
+                const badgeClass = getBadgeClass(p.badgeText);
+                const badgeHTML = p.badgeText ? `<div class="product-badge ${badgeClass}">${p.badgeText}</div>` : '';
 
                 let variantHTML = '';
                 if (p.variantsList && p.variantsList.length > 0) {
@@ -2826,7 +2870,6 @@
             const img = document.getElementById('modalZoomImg');
             if (!container || !img) return;
 
-            // Lupa al mover ratón (Computador)
             container.onmousemove = function(e) {
                 const rect = container.getBoundingClientRect();
                 const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -2840,7 +2883,6 @@
                 img.style.transformOrigin = "center center";
             };
 
-            // Lupa táctil (Celulares / Tablets)
             container.ontouchmove = function(e) {
                 if (e.touches.length > 0) {
                     const touch = e.touches[0];
