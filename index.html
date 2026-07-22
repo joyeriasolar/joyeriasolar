@@ -788,7 +788,6 @@
             border-color: var(--tiffany-blue);
         }
 
-        /* RECUADRO CON SCROLL INTERNO PARA RESEÑAS ILIMITADAS */
         .reviews-scroll-box {
             max-height: 480px;
             overflow-y: auto;
@@ -798,7 +797,6 @@
             padding: 20px;
         }
 
-        /* Personalización elegante de la barra de scroll */
         .reviews-scroll-box::-webkit-scrollbar {
             width: 6px;
         }
@@ -1012,7 +1010,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* Sección Sobre Nosotros */
         .about-section {
             margin-top: 3rem;
             padding: 3rem 2rem;
@@ -1037,7 +1034,6 @@
             font-size: 0.95rem;
         }
 
-        /* Sección de Garantía e Información */
         .info-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1069,7 +1065,6 @@
             line-height: 1.5;
         }
 
-        /* Overlay para Carrito y Modales */
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -1088,7 +1083,6 @@
             pointer-events: auto;
         }
 
-        /* Panel Lateral del Carrito */
         #cartPanel {
             position: fixed;
             top: 0;
@@ -1235,6 +1229,51 @@
 
         .customer-form-box input:focus, .customer-form-box select:focus {
             border-color: var(--tiffany-blue);
+        }
+
+        /* --- ESTILOS OPCIÓN DE REGALO --- */
+        .gift-option-box {
+            border-top: 1px dashed var(--border-color);
+            padding-top: 8px;
+            margin-top: 6px;
+        }
+
+        .gift-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: var(--luxury-dark);
+            font-weight: 600;
+        }
+
+        .gift-checkbox-label input[type="checkbox"] {
+            accent-color: var(--tiffany-blue);
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+
+        .gift-message-container {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .gift-message-container.active {
+            display: block;
+        }
+
+        .gift-message-container textarea {
+            width: 100%;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+            background-color: #FFFFFF;
+            resize: vertical;
         }
 
         .shipping-box {
@@ -1760,7 +1799,7 @@
             <div class="loading-container">Cargando colección exclusiva desde Google Sheets...</div>
         </div>
 
-        <!-- SECCIÓN DE RESEÑAS CON CAJA Y BARRAS DE SCROLL AUTÓNOMA -->
+        <!-- SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA -->
         <section class="reviews-section-container">
             <h2 class="section-title">Opiniones de Nuestros Clientes</h2>
             
@@ -1779,11 +1818,8 @@
                 <button class="btn-write-review" onclick="openReviewModal()"><i class="fa-regular fa-pen-to-square"></i> Escribir mi Testimonio</button>
             </div>
 
-            <!-- Recuadro contenedor con scroll para reseñas ilimitadas -->
             <div class="reviews-scroll-box">
-                <div class="reviews-grid" id="reviewsGrid">
-                    <!-- Se carga dinámicamente desde Google Sheets y localStorage -->
-                </div>
+                <div class="reviews-grid" id="reviewsGrid"></div>
             </div>
         </section>
 
@@ -1897,6 +1933,17 @@
                     <option value="Transferencia Bancaria">Pago: Transferencia Bancaria</option>
                     <option value="Tarjeta de Débito/Crédito">Pago: Tarjeta Débito / Crédito</option>
                 </select>
+
+                <!-- OPCIÓN DE REGALO CON MENSAJE -->
+                <div class="gift-option-box">
+                    <label class="gift-checkbox-label">
+                        <input type="checkbox" id="giftCheckbox" onchange="toggleGiftMessage()">
+                        <span>🎁 ¿Es para un regalo?</span>
+                    </label>
+                    <div class="gift-message-container" id="giftMessageContainer">
+                        <textarea id="giftMessage" rows="2" placeholder="Escribe aquí una dedicatoria o mensaje para la tarjeta..."></textarea>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1954,7 +2001,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE FORMULARIO PARA DEJAR RESEÑA REAL -->
+    <!-- MODAL FORMULARIO DE RESEÑAS -->
     <div id="reviewFormModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'reviewFormModal')">
         <div class="size-guide-modal-content">
             <button class="modal-close" onclick="closeModal('reviewFormModal')">&times;</button>
@@ -2176,6 +2223,19 @@
             }
         }
 
+        /* LÓGICA OPCIÓN DE REGALO */
+        function toggleGiftMessage() {
+            const chk = document.getElementById('giftCheckbox');
+            const container = document.getElementById('giftMessageContainer');
+            if (chk && container) {
+                if (chk.checked) {
+                    container.classList.add('active');
+                } else {
+                    container.classList.remove('active');
+                }
+            }
+        }
+
         // LÓGICA DE RESEÑAS REALES
         function openReviewModal() {
             document.getElementById('reviewFormModal').classList.add('active');
@@ -2218,11 +2278,9 @@
             btn.innerText = "Enviando...";
 
             try {
-                // Guarda local para vista inmediata
                 reviewsList.unshift(newReview);
                 renderReviews();
 
-                // Envia a Google Sheets por Apps Script
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -2258,7 +2316,6 @@
                 return;
             }
 
-            // Calcula promedio
             const sum = reviewsList.reduce((acc, r) => acc + Number(r.stars || 5), 0);
             const avg = (sum / reviewsList.length).toFixed(1);
             document.getElementById('reviewsScoreLabel').innerText = `${avg} / 5.0 — Basado en ${reviewsList.length} opinión(es) real(es)`;
@@ -2290,7 +2347,7 @@
             });
         }
 
-        // Cargar datos (Productos y Reseñas) desde Google Sheets
+        // Cargar datos desde Google Sheets
         async function fetchCatalogFromSheets() {
             try {
                 const response = await fetch(APPS_SCRIPT_URL);
@@ -2309,7 +2366,7 @@
                             stars: Number(r.Estrellas || r.stars || 5),
                             comment: r.Comentario || r.comment || '',
                             date: r.Fecha || r.date || ''
-                        })).reverse(); // Ordena del más reciente al más antiguo
+                        })).reverse();
                         renderReviews();
                     }
                 }
@@ -2801,6 +2858,10 @@
             const address = document.getElementById('custAddress').value.trim();
             const payment = document.getElementById('custPayment').value;
 
+            // Datos de regalo
+            const isGift = document.getElementById('giftCheckbox') ? document.getElementById('giftCheckbox').checked : false;
+            const giftMsg = document.getElementById('giftMessage') ? document.getElementById('giftMessage').value.trim() : '';
+
             if(!name || !rut || !address) {
                 alert("Por favor completa los campos obligatorios del comprador (Nombre, RUT y Dirección) antes de solicitar por WhatsApp.");
                 return;
@@ -2813,7 +2874,15 @@
             text += `• *Nombre:* ${name}\n`;
             text += `• *RUT:* ${rut}\n`;
             text += `• *Dirección/Comuna:* ${address}\n`;
-            text += `• *Medio de Pago:* ${payment}\n\n`;
+            text += `• *Medio de Pago:* ${payment}\n`;
+
+            if (isGift) {
+                text += `• *EMPAQUE DE REGALO:* SÍ 🎁\n`;
+                if (giftMsg) {
+                    text += `  *Nota para tarjeta:* "${giftMsg}"\n`;
+                }
+            }
+            text += "\n";
 
             text += "*--- DETALLE DE PRODUCTOS ---*\n";
             cart.forEach(item => {
