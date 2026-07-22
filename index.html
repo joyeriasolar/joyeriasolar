@@ -734,7 +734,7 @@
             border-color: var(--luxury-dark) !important;
         }
 
-        /* --- SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA --- */
+        /* SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA */
         .reviews-section-container {
             margin-top: 5rem;
             padding: 3rem 2rem;
@@ -1083,6 +1083,7 @@
             pointer-events: auto;
         }
 
+        /* --- PANEL LATERAL DEL CARRITO CON ESTRUCTURA CORREGIDA Y SCROLL AUTÓNOMO --- */
         #cartPanel {
             position: fixed;
             top: 0;
@@ -1096,7 +1097,7 @@
             transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
-            padding: 25px;
+            padding: 20px;
         }
 
         #cartPanel.open {
@@ -1109,7 +1110,7 @@
             align-items: center;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 12px;
-            margin-bottom: 15px;
+            flex-shrink: 0;
         }
 
         .cart-header h3 {
@@ -1128,11 +1129,31 @@
             line-height: 1;
         }
 
-        .cart-items {
+        /* CUERPO DEL CARRITO CON SCROLL INDEPENDIENTE */
+        .cart-body-scroll {
             flex-grow: 1;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 6px;
+            margin-top: 10px;
             margin-bottom: 10px;
+        }
+
+        /* Personalización de la barra de scroll del carrito */
+        .cart-body-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .cart-body-scroll::-webkit-scrollbar-track {
+            background: #F5F5F5;
+        }
+
+        .cart-body-scroll::-webkit-scrollbar-thumb {
+            background: var(--tiffany-blue);
+            border-radius: 3px;
+        }
+
+        .cart-items {
+            margin-bottom: 15px;
         }
 
         .cart-item {
@@ -1186,8 +1207,7 @@
             background-color: var(--tiffany-soft-bg);
             border: 1px solid var(--border-color);
             padding: 12px 14px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .customer-form-title {
@@ -1231,7 +1251,7 @@
             border-color: var(--tiffany-blue);
         }
 
-        /* --- ESTILOS OPCIÓN DE REGALO --- */
+        /* OPCIÓN DE REGALO */
         .gift-option-box {
             border-top: 1px dashed var(--border-color);
             padding-top: 8px;
@@ -1310,9 +1330,12 @@
             font-weight: 600;
         }
 
+        /* PIE DE PÁGINA FIJO DEL CARRITO */
         .cart-footer {
             border-top: 1px solid var(--border-color);
             padding-top: 12px;
+            flex-shrink: 0;
+            background-color: #FFFFFF;
         }
 
         .cart-row-detail {
@@ -1327,8 +1350,8 @@
             display: flex;
             justify-content: space-between;
             font-size: 1.2rem;
-            margin-top: 8px;
-            margin-bottom: 15px;
+            margin-top: 6px;
+            margin-bottom: 12px;
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-weight: 600;
             color: var(--luxury-dark);
@@ -1913,50 +1936,56 @@
     <!-- Fondo Oscuro Overlay -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
-    <!-- Panel Lateral del Carrito -->
+    <!-- PANEL LATERAL DEL CARRITO STRUCTURA CORREGIDA -->
     <div id="cartPanel">
+        <!-- Cabecera Fija -->
         <div class="cart-header">
             <h3>Tu Selección</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
         </div>
-        <div id="cartItems" class="cart-items"></div>
 
-        <div class="customer-form-box">
-            <div class="customer-form-title"><i class="fa-regular fa-user"></i> Datos del Comprador</div>
-            <div class="customer-form-group">
-                <div class="form-row-2">
-                    <input type="text" id="custName" placeholder="Nombre y Apellido *">
-                    <input type="text" id="custRut" placeholder="RUT *">
-                </div>
-                <input type="text" id="custAddress" placeholder="Dirección y Comuna de Despacho *">
-                <select id="custPayment">
-                    <option value="Transferencia Bancaria">Pago: Transferencia Bancaria</option>
-                    <option value="Tarjeta de Débito/Crédito">Pago: Tarjeta Débito / Crédito</option>
-                </select>
+        <!-- CUERPO DESPLAZABLE CON SCROLL AUTÓNOMO -->
+        <div class="cart-body-scroll">
+            <div id="cartItems" class="cart-items"></div>
 
-                <!-- OPCIÓN DE REGALO CON MENSAJE -->
-                <div class="gift-option-box">
-                    <label class="gift-checkbox-label">
-                        <input type="checkbox" id="giftCheckbox" onchange="toggleGiftMessage()">
-                        <span>🎁 ¿Es para un regalo?</span>
-                    </label>
-                    <div class="gift-message-container" id="giftMessageContainer">
-                        <textarea id="giftMessage" rows="2" placeholder="Escribe aquí una dedicatoria o mensaje para la tarjeta..."></textarea>
+            <div class="customer-form-box">
+                <div class="customer-form-title"><i class="fa-regular fa-user"></i> Datos del Comprador</div>
+                <div class="customer-form-group">
+                    <div class="form-row-2">
+                        <input type="text" id="custName" placeholder="Nombre y Apellido *">
+                        <input type="text" id="custRut" placeholder="RUT *">
+                    </div>
+                    <input type="text" id="custAddress" placeholder="Dirección y Comuna de Despacho *">
+                    <select id="custPayment">
+                        <option value="Transferencia Bancaria">Pago: Transferencia Bancaria</option>
+                        <option value="Tarjeta de Débito/Crédito">Pago: Tarjeta Débito / Crédito</option>
+                    </select>
+
+                    <!-- OPCIÓN DE REGALO CON MENSAJE -->
+                    <div class="gift-option-box">
+                        <label class="gift-checkbox-label">
+                            <input type="checkbox" id="giftCheckbox" onchange="toggleGiftMessage()">
+                            <span>🎁 ¿Es para un regalo?</span>
+                        </label>
+                        <div class="gift-message-container" id="giftMessageContainer">
+                            <textarea id="giftMessage" rows="2" placeholder="Escribe aquí una dedicatoria o mensaje para la tarjeta..."></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="shipping-box">
+                <label for="shippingSelect"><i class="fa-solid fa-truck"></i> Método de Envío:</label>
+                <select id="shippingSelect" onchange="updateCart()">
+                    <option value="rm">Región Metropolitana ($3.500)</option>
+                    <option value="regiones">Otras Regiones de Chile ($4.500)</option>
+                    <option value="porpagar">Envío Por Pagar (Starken / Chilexpress)</option>
+                </select>
+                <div class="free-shipping-note" id="freeShippingNote">✨ Envío GRATIS por compras sobre $50.000</div>
+            </div>
         </div>
 
-        <div class="shipping-box">
-            <label for="shippingSelect"><i class="fa-solid fa-truck"></i> Método de Envío:</label>
-            <select id="shippingSelect" onchange="updateCart()">
-                <option value="rm">Región Metropolitana ($3.500)</option>
-                <option value="regiones">Otras Regiones de Chile ($4.500)</option>
-                <option value="porpagar">Envío Por Pagar (Starken / Chilexpress)</option>
-            </select>
-            <div class="free-shipping-note" id="freeShippingNote">✨ Envío GRATIS por compras sobre $50.000</div>
-        </div>
-
+        <!-- Pie de Página Fijo -->
         <div class="cart-footer">
             <div class="cart-row-detail">
                 <span>Subtotal joyas:</span>
@@ -2767,7 +2796,7 @@
                 }
             } else {
                 imgContainer.innerHTML = `<div class="placeholder-image">
-                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                     <div class="placeholder-text">Joyería Solar</div>
                    </div>`;
             }
@@ -2858,7 +2887,6 @@
             const address = document.getElementById('custAddress').value.trim();
             const payment = document.getElementById('custPayment').value;
 
-            // Datos de regalo
             const isGift = document.getElementById('giftCheckbox') ? document.getElementById('giftCheckbox').checked : false;
             const giftMsg = document.getElementById('giftMessage') ? document.getElementById('giftMessage').value.trim() : '';
 
