@@ -734,7 +734,7 @@
             border-color: var(--luxury-dark) !important;
         }
 
-        /* SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA */
+        /* --- SECCIÓN DE RESEÑAS CON CAJA DE SCROLL AUTÓNOMA --- */
         .reviews-section-container {
             margin-top: 5rem;
             padding: 3rem 2rem;
@@ -1083,7 +1083,7 @@
             pointer-events: auto;
         }
 
-        /* --- PANEL LATERAL DEL CARRITO CON ESTRUCTURA CORREGIDA Y SCROLL AUTÓNOMO --- */
+        /* --- PANEL LATERAL DEL CARRITO --- */
         #cartPanel {
             position: fixed;
             top: 0;
@@ -1129,7 +1129,6 @@
             line-height: 1;
         }
 
-        /* CUERPO DEL CARRITO CON SCROLL INDEPENDIENTE */
         .cart-body-scroll {
             flex-grow: 1;
             overflow-y: auto;
@@ -1138,7 +1137,6 @@
             margin-bottom: 10px;
         }
 
-        /* Personalización de la barra de scroll del carrito */
         .cart-body-scroll::-webkit-scrollbar {
             width: 5px;
         }
@@ -1251,7 +1249,6 @@
             border-color: var(--tiffany-blue);
         }
 
-        /* OPCIÓN DE REGALO */
         .gift-option-box {
             border-top: 1px dashed var(--border-color);
             padding-top: 8px;
@@ -1330,7 +1327,6 @@
             font-weight: 600;
         }
 
-        /* PIE DE PÁGINA FIJO DEL CARRITO */
         .cart-footer {
             border-top: 1px solid var(--border-color);
             padding-top: 12px;
@@ -1375,6 +1371,7 @@
             background-color: var(--luxury-dark);
         }
 
+        /* --- MODAL Y CONTENEDOR DE IMAGEN CON EFECTO LUPA / ZOOM --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1437,6 +1434,7 @@
             margin: 0 auto;
         }
 
+        /* CONTENEDOR DE LUPA */
         .modal-img-container {
             width: 100%;
             height: 280px;
@@ -1445,12 +1443,17 @@
             justify-content: center;
             background-color: #FAFAFA;
             border: 1px solid #F0F0F0;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
         }
 
         .modal-img-container img {
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
+            transition: transform 0.2s ease, transform-origin 0.2s ease;
+            will-change: transform, transform-origin;
         }
 
         .gallery-thumbnails {
@@ -1936,15 +1939,13 @@
     <!-- Fondo Oscuro Overlay -->
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
 
-    <!-- PANEL LATERAL DEL CARRITO STRUCTURA CORREGIDA -->
+    <!-- PANEL LATERAL DEL CARRITO -->
     <div id="cartPanel">
-        <!-- Cabecera Fija -->
         <div class="cart-header">
             <h3>Tu Selección</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
         </div>
 
-        <!-- CUERPO DESPLAZABLE CON SCROLL AUTÓNOMO -->
         <div class="cart-body-scroll">
             <div id="cartItems" class="cart-items"></div>
 
@@ -1961,7 +1962,6 @@
                         <option value="Tarjeta de Débito/Crédito">Pago: Tarjeta Débito / Crédito</option>
                     </select>
 
-                    <!-- OPCIÓN DE REGALO CON MENSAJE -->
                     <div class="gift-option-box">
                         <label class="gift-checkbox-label">
                             <input type="checkbox" id="giftCheckbox" onchange="toggleGiftMessage()">
@@ -1985,7 +1985,6 @@
             </div>
         </div>
 
-        <!-- Pie de Página Fijo -->
         <div class="cart-footer">
             <div class="cart-row-detail">
                 <span>Subtotal joyas:</span>
@@ -2003,12 +2002,12 @@
         </div>
     </div>
 
-    <!-- Modal de Vista Ampliada -->
+    <!-- Modal de Vista Ampliada con Lupa de Zoom -->
     <div id="productModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'productModal')">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
             <div class="modal-gallery-wrapper">
-                <div class="modal-img-container" id="modalImgContainer"></div>
+                <div class="modal-img-container" id="modalImgContainer" title="Mueve el cursor o toca para ampliar detalles"></div>
                 <div class="gallery-thumbnails" id="galleryThumbnails"></div>
             </div>
             <div class="modal-info">
@@ -2796,7 +2795,7 @@
                 }
             } else {
                 imgContainer.innerHTML = `<div class="placeholder-image">
-                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 4,12A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L9,12H15L12,6Z"/></svg>
                     <div class="placeholder-text">Joyería Solar</div>
                    </div>`;
             }
@@ -2814,8 +2813,49 @@
             document.getElementById('productModal').classList.add('active');
         }
 
+        /* CAMBIO DE IMAGEN EN MODAL + CONFIGURACIÓN DE LUPA / ZOOM */
         function setModalImage(url) {
-            document.getElementById('modalImgContainer').innerHTML = `<img src="${url}" alt="Joya">`;
+            const container = document.getElementById('modalImgContainer');
+            container.innerHTML = `<img src="${url}" alt="Joya" id="modalZoomImg">`;
+            setupZoomEffect();
+        }
+
+        /* LÓGICA INTERACTIVA DEL EFECTO ZOOM / LUPA */
+        function setupZoomEffect() {
+            const container = document.getElementById('modalImgContainer');
+            const img = document.getElementById('modalZoomImg');
+            if (!container || !img) return;
+
+            // Lupa al mover ratón (Computador)
+            container.onmousemove = function(e) {
+                const rect = container.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                img.style.transformOrigin = `${x}% ${y}%`;
+                img.style.transform = "scale(2.2)";
+            };
+
+            container.onmouseleave = function() {
+                img.style.transform = "scale(1)";
+                img.style.transformOrigin = "center center";
+            };
+
+            // Lupa táctil (Celulares / Tablets)
+            container.ontouchmove = function(e) {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    const rect = container.getBoundingClientRect();
+                    const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                    const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                    img.style.transformOrigin = `${x}% ${y}%`;
+                    img.style.transform = "scale(2.2)";
+                }
+            };
+
+            container.ontouchend = function() {
+                img.style.transform = "scale(1)";
+                img.style.transformOrigin = "center center";
+            };
         }
 
         function changeModalImage(url, thumbElement) {
