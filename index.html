@@ -112,6 +112,7 @@
         .top-bar-nav.prev { left: 5px; }
         .top-bar-nav.next { right: 5px; }
 
+        /* HEADER RETRÁCTIL EN SCROLL */
         header {
             background-color: #FFFFFF;
             color: var(--luxury-dark);
@@ -121,6 +122,11 @@
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        header.header-hidden {
+            transform: translateY(-100%);
         }
 
         .header-container {
@@ -1472,7 +1478,8 @@
         <button class="top-bar-nav next" onclick="moveTopBarSlide(1)">&#10095;</button>
     </div>
 
-    <header>
+    <!-- HEADER RETRÁCTIL EN SCROLL -->
+    <header id="mainHeader">
         <div class="header-container">
             <div class="logo-container" onclick="resetHome()" title="Volver al inicio">
                 <img src="https://i.postimg.cc/7YJJ4YKx/Chat-GPT-Image-20-jul-2026-09-39-09-p-m.png" alt="Joyería Solar Icono" class="header-mini-logo">
@@ -1513,6 +1520,10 @@
                     <div class="editorial-slide active" onclick="setEditorialSlide(0)">
                         <div class="editorial-img" style="background-image: url('https://i.postimg.cc/nL7LrW3p/Chat-GPT-Image-27-jul-2026-12-00-56-p-m.png');"></div>
                     </div>
+                    <!-- Diapositiva 2 -->
+                    <div class="editorial-slide" onclick="setEditorialSlide(1)">
+                        <div class="editorial-img" style="background-image: url('https://i.postimg.cc/xd4MLBQD/Chat-GPT-Image-27-jul-2026-12-31-49-p-m.png');"></div>
+                    </div>
                 </div>
 
                 <button class="editorial-arrow next" onclick="moveEditorialSlide(1)">&#10095;</button>
@@ -1520,6 +1531,7 @@
 
             <div class="editorial-dots">
                 <span class="editorial-dot active" onclick="setEditorialSlide(0)"></span>
+                <span class="editorial-dot" onclick="setEditorialSlide(1)"></span>
             </div>
         </section>
 
@@ -1884,6 +1896,23 @@
         let cart = JSON.parse(localStorage.getItem('solar_cart')) || [];
         let selectedStars = 5;
         let activeImageIndices = {};
+
+        // LÓGICA DE HEADER RETRÁCTIL EN SCROLL
+        let lastScrollTop = 0;
+        const mainHeader = document.getElementById('mainHeader');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > 120) {
+                // Al bajar el scroll
+                if (mainHeader) mainHeader.classList.add('header-hidden');
+            } else {
+                // Al subir el scroll
+                if (mainHeader) mainHeader.classList.remove('header-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
 
         function getBadgeClass(badgeText) {
             if (!badgeText) return 'badge-tiffany';
