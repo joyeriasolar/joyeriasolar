@@ -1524,6 +1524,14 @@
                     <div class="editorial-slide" onclick="setEditorialSlide(1)">
                         <div class="editorial-img" style="background-image: url('https://i.postimg.cc/xd4MLBQD/Chat-GPT-Image-27-jul-2026-12-31-49-p-m.png');"></div>
                     </div>
+                    <!-- Diapositiva 3 -->
+                    <div class="editorial-slide" onclick="setEditorialSlide(2)">
+                        <div class="editorial-img" style="background-image: url('https://i.postimg.cc/DyBB0vZG/Chat-GPT-Image-27-jul-2026-01-54-17-p-m.png');"></div>
+                    </div>
+                    <!-- Diapositiva 4 -->
+                    <div class="editorial-slide" onclick="setEditorialSlide(3)">
+                        <div class="editorial-img" style="background-image: url('https://i.postimg.cc/bNJ16QyQ/Chat-GPT-Image-27-jul-2026-01-46-51-p-m.png');"></div>
+                    </div>
                 </div>
 
                 <button class="editorial-arrow next" onclick="moveEditorialSlide(1)">&#10095;</button>
@@ -1532,6 +1540,8 @@
             <div class="editorial-dots">
                 <span class="editorial-dot active" onclick="setEditorialSlide(0)"></span>
                 <span class="editorial-dot" onclick="setEditorialSlide(1)"></span>
+                <span class="editorial-dot" onclick="setEditorialSlide(2)"></span>
+                <span class="editorial-dot" onclick="setEditorialSlide(3)"></span>
             </div>
         </section>
 
@@ -1905,10 +1915,8 @@
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
             if (scrollTop > lastScrollTop && scrollTop > 120) {
-                // Al bajar el scroll
                 if (mainHeader) mainHeader.classList.add('header-hidden');
             } else {
-                // Al subir el scroll
                 if (mainHeader) mainHeader.classList.remove('header-hidden');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
