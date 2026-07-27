@@ -280,7 +280,7 @@
             padding: 0 1.5rem 4rem 1.5rem;
         }
 
-        /* CARRUSEL ESTILO TIFFANY & CO. (CENTRADO CON PEEK LATERAL) */
+        /* --- CARRUSEL ESTILO TIFFANY & CO. (CENTRADO CON PEEK LATERAL) --- */
         .editorial-section {
             margin-bottom: 4rem;
             width: 100%;
@@ -343,6 +343,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
         }
 
+        /* FLECHAS FINAS SÚTILES ESTILO TIFFANY */
         .editorial-arrow {
             position: absolute;
             top: 50%;
@@ -454,6 +455,7 @@
             box-shadow: 0 12px 30px rgba(10, 186, 181, 0.12);
         }
 
+        /* ETIQUETAS Y COLORES DINÁMICOS */
         .product-badge {
             position: absolute;
             top: 12px;
@@ -1481,7 +1483,6 @@
             </div>
             <div class="controls">
                 <input type="text" id="searchInput" placeholder="Buscar joya, código o categoría..." oninput="filterProducts()">
-                <!-- Selector de categorías dinámico -->
                 <select id="categorySelect" onchange="filterProducts()">
                     <option value="">Todas las colecciones</option>
                 </select>
@@ -1510,17 +1511,7 @@
                 <div class="editorial-track" id="editorialTrack">
                     <!-- Diapositiva 1 -->
                     <div class="editorial-slide active" onclick="setEditorialSlide(0)">
-                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1600&auto=format&fit=crop');"></div>
-                    </div>
-
-                    <!-- Diapositiva 2 -->
-                    <div class="editorial-slide" onclick="setEditorialSlide(1)">
-                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1600&auto=format&fit=crop');"></div>
-                    </div>
-
-                    <!-- Diapositiva 3 -->
-                    <div class="editorial-slide" onclick="setEditorialSlide(2)">
-                        <div class="editorial-img" style="background-image: url('https://images.unsplash.com/photo-1611591475155-4284fa289329?q=80&w=1600&auto=format&fit=crop');"></div>
+                        <div class="editorial-img" style="background-image: url('https://i.postimg.cc/nL7LrW3p/Chat-GPT-Image-27-jul-2026-12-00-56-p-m.png');"></div>
                     </div>
                 </div>
 
@@ -1529,8 +1520,6 @@
 
             <div class="editorial-dots">
                 <span class="editorial-dot active" onclick="setEditorialSlide(0)"></span>
-                <span class="editorial-dot" onclick="setEditorialSlide(1)"></span>
-                <span class="editorial-dot" onclick="setEditorialSlide(2)"></span>
             </div>
         </section>
 
@@ -2120,14 +2109,11 @@
             });
         }
 
-        // GENERADOR DINÁMICO DE CATEGORÍAS EN EL SELECT
         function updateCategorySelectOptions() {
             const selectEl = document.getElementById('categorySelect');
             if (!selectEl) return;
             
             const currentValue = selectEl.value;
-            
-            // Extrae categorías únicas ordenadas
             const categories = [...new Set(catalog.map(p => p.category).filter(c => c && c.trim() !== ""))].sort();
             
             let optionsHTML = `<option value="">Todas las colecciones</option>`;
@@ -2139,10 +2125,8 @@
             selectEl.value = currentValue;
         }
 
-        // Cargar datos desde Google Sheets (Agregando parámetro sin caché)
         async function fetchCatalogFromSheets() {
             try {
-                // Agregamos un timestamp para forzar que el navegador busque siempre los últimos productos del Sheet
                 const fetchUrl = `${APPS_SCRIPT_URL}?nocache=${new Date().getTime()}`;
                 const response = await fetch(fetchUrl);
                 const rawData = await response.json();
@@ -2166,7 +2150,6 @@
                 }
 
                 catalog = rawProductos.map(row => {
-                    // Flexibilidad en el nombrado de columnas de tu Google Sheet
                     const id = row.ID || row.id || row.Id || row.CODIGO || row.Codigo || "";
                     const name = row.Nombre || row.name || row.nombre || row.PRODUCTO || row.Producto || "";
                     const category = row.Categoria || row.category || row.categoria || row.CATEGORIA || "";
